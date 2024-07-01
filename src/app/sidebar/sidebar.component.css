@@ -1,0 +1,107 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.sidebar {
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #A8E063 0%, #56AB2F 100%);
+  color: #ffffff;
+  padding-top: 20px;
+  transition: width 0.3s;
+}
+
+.sidebar-header {
+  padding: 10px;
+  text-align: center;
+}
+
+.sidebar-logo {
+  width: 50%;
+  /* Aumenta el porcentaje para hacer el logo más grande */
+  margin-right: 10px;
+}
+
+.nav-link {
+  color: #ffffff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.nav-list {
+  margin-top: 50px;
+  /* Ajusta este valor según sea necesario */
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.nav-link i {
+  margin-right: 10px;
+}
+
+.nav-link.active {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.dropdown-toggle {
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-weight: bold;
+  margin-top: 75%;
+  /* Ajusta este valor según la cantidad de espacio deseado */
+}
+
+.dropdown-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #306928;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  background-color: #2fc01b;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    overflow: hidden;
+  }
+  .sidebar.expanded {
+    width: 100%; /* O el ancho que desees para la sidebar expandida */
+  }
+  .menu-btn {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+  .menu-btn.expanded + .sidebar {
+    width: 100%; /* Ajusta según necesidad */
+  }
+}
+
+.menu-btn {
+  display: block; /* Solo visible en móviles */
+}

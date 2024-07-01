@@ -1,0 +1,82 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  color: #4CAF50;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  width: 30%;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.contenedor-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Asegura que los elementos estén alineados verticalmente */
+  /* Agrega cualquier otro estilo que necesites para el contenedor */
+}
+
+.fecha-Factura{
+  display: block;
+  justify-content: left;
+  color: rgb(80, 80, 80);
+  width: 40%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-family: 'Arial', sans-serif; /* Cambia 'Arial' por el tipo de letra que prefieras */
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .container {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,40 @@
+<app-sidebar></app-sidebar>
+<div class="container">
+    <h1>Gestión de Clientes</h1>
+    <button mat-raised-button (click)="openDialog()" class="botonCrear">Crear Usuario</button>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+                <tr>
+                    <th scope="col">Cedula</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Fecha de nacimiento</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Tipo de Pago</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cliente of clientes">
+                    <td>{{cliente.cedula}}</td>
+                    <td>{{cliente.nombres}}</td>
+                    <td>{{cliente.apellidos}}</td>
+                    <td>{{cliente.fecha_nacimiento}}</td>
+                    <td>{{cliente.direccion}}</td>
+                    <td>{{cliente.telefono}}</td>
+                    <td>{{cliente.email}}</td>
+                    <td>{{cliente.tipoPagoNombre}}</td> <!-- Mostrar el nombre del tipo de pago -->
+                    <td>{{cliente.estado ? 'Activo' : 'Inactivo'}}</td>
+                    <td>
+                        <button class="editar" (click)="openDialog(cliente, true)">Editar</button>
+                        <button class="eliminar" (click)="deleteCliente(cliente.cedula)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

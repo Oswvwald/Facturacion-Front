@@ -1,0 +1,9 @@
+{
+    "/api/*": {
+      "target": "https://inventaioapi20240613085649.azurewebsites.net",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

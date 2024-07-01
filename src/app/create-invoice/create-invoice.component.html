@@ -1,0 +1,105 @@
+<div class="container">
+  <h1>Gestión de Facturas</h1>
+  <div class="container">
+    <div class="contenedor-flex">
+      <label for="fecha" class="fecha-Factura">Fecha: <b>{{fechaFactura}}</b></label>
+    </div>
+    <div class="row">
+      <div class="column">
+        <div>
+          <label for="cedula">Cédula:</label>
+          <input id="cedula" type="text" [(ngModel)]="cedulaInput" (input)="onSearchCliente()"
+            [matAutocomplete]="auto" />
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectCliente($event.option.value)">
+            <mat-option *ngFor="let cliente of filteredClientes" [value]="cliente.cedula">
+              {{ cliente.cedula }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div>
+          <label for="nombres">Nombres:</label>
+          <input id="nombres" type="text" [(ngModel)]="selectedCliente.nombres" disabled />
+        </div>
+        <div>
+          <label for="apellidos">Apellidos:</label>
+          <input id="apellidos" type="text" [(ngModel)]="selectedCliente.apellidos" disabled />
+        </div>
+      </div>
+      <div class="column">
+        <div>
+          <label for="direccion">Dirección:</label>
+          <input id="direccion" type="text" [(ngModel)]="selectedCliente.direccion" disabled />
+        </div>
+        <div>
+          <label for="telefono">Teléfono:</label>
+          <input id="telefono" type="text" [(ngModel)]="selectedCliente.telefono" disabled />
+        </div>
+        <div>
+          <label for="correo">Correo:</label>
+          <input id="correo" type="text" [(ngModel)]="selectedCliente.email" disabled />
+        </div>
+      </div>
+      <div class="column">
+        <div>
+          <label for="fecha">Fecha de nacimiento:</label>
+          <input id="fecha" type="text" [(ngModel)]="selectedCliente.fecha_nacimiento" disabled />
+        </div>
+        <div>
+          <label for="tipoPago">Tipo de Pago:</label>
+          <select id="tipoPago" [(ngModel)]="tipoPago">
+            <option *ngFor="let tipo of tiposPago" [value]="tipo.tipo_code">{{ tipo.tipo }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="iva">IVA a aplicar (%):</label>
+          <input id="iva" type="number" [(ngModel)]="iva" />
+        </div>
+        <button (click)="createInvoice()">Crear Factura</button>
+      </div>
+    </div>
+
+    <h2>Productos</h2>
+    <div>
+      <label for="buscador">Buscar producto:</label>
+      <input id="buscador" type="text" [(ngModel)]="productSearch" (input)="filterProducts()" />
+    </div>
+    <div>
+      <label for="producto">Producto:</label>
+      <select id="producto" [(ngModel)]="selectedProduct" (change)="onSelectProduct()">
+        <option *ngFor="let producto of filteredProductos" [ngValue]="producto">{{ producto.nombre }}</option>
+      </select>
+      <label for="cantidad">Cantidad:</label>
+      <input id="cantidad" type="number" [(ngModel)]="cantidad" />
+      <button (click)="addProductToCart()">Agregar al Carrito</button>
+    </div>
+
+    <h2>Carrito de Compras</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Producto</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Subtotal</th>
+          <th>Total</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of carrito">
+          <td>{{ item.codigo }}</td>
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ item.pvp }}</td>
+          <td>{{ item.subtotal }}</td>
+          <td>{{ item.total }}</td>
+          <td><button (click)="removeProductFromCart(item)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Total: {{ totalCarrito }}</h3>
+  </div>
+</div>

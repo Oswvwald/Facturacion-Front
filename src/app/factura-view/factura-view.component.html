@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Gestión de Facturas</h1>
+    <button class="botonCrear" (click)="crearFactura()">Crear Factura</button>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Número de Factura</th>
+            <th>Cliente</th>
+            <th>Tipo de Pago</th>
+            <th>Fecha de Emisión</th>
+            <th>Total</th>
+            <th>Iva aplicado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let factura of facturas">
+            <td>{{factura.factura_id}}</td>
+            <td>{{factura.NombresCliente}}</td>
+            <td>{{factura.tipoPagoNombre}}</td>
+            <td>{{factura.fecha}}</td>
+            <td>{{factura.total}}</td>
+            <td>{{factura.iva}}</td>
+            <td>
+              <!-- <button class="editar" (click)="editFactura(factura)">Editar</button> -->
+              <!-- <button class="eliminar" (click)="deleteFactura(factura.factura_id)">Eliminar</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

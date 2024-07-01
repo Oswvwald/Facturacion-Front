@@ -9,13 +9,12 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
 import { LoginComponent } from './login/login.component';
 
 
-
 const routes: Routes = [
   {path: 'clientes-view', component: ClientesViewComponent},
   {path: 'sidebar', component: SidebarComponent},
   {path: 'facturas-view', component: FacturaViewComponent},
   {path: 'create-invoice', component: CreateInvoiceComponent},
-  {path: 'Login', component: LoginComponent}
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({

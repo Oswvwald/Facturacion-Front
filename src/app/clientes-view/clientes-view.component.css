@@ -1,3 +1,14 @@
+/* Estilos generales */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(100deg, #464646, #ffffff);
+  font-family: Arial, sans-serif;
+}
+
 /* Contenedor principal */
 .container {
     padding: 10px;
@@ -6,39 +17,53 @@
     margin-top: 40px;
   }
   
-  /* Estilo del botón Crear */
-  .botonCrear {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-    margin-bottom: 15px;
-    border: none;
-    font-size: 15px;
-    padding: 8px 11px; /* Padding original */
-  }
+
+
+  /* Botón Crear Factura */
+.botonCrear {
+  background-color: #007BFF; /* Azul */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  align-self: flex-start; /* Alinear a la izquierda */
+  margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
+}
   
   .botonCrear:hover {
     background-color: #45a049;
   }
   
-  /* Estilo de la tabla */
-  .table {
-    background-color: white;
-    border-collapse: collapse;
-    width: calc(100% - 220px); /* Ajuste para los márgenes izquierdo y derecho */
-    margin-top: 15px;
-    font-size: 14px; /* Tamaño de la fuente original */
+ 
+    /* Estilos para la tabla */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
   }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
   
   .table th, .table td {
-    border: 1px solid #ddd;
-    padding: 8px; /* Padding original */
-    text-align: left;
+   
+    padding: 10px;
+    border-bottom: 1px solid #61616137;
   }
   
   .table th {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-  }
+    background-color: #72BD41
+
+    ;
+    font-weight: bold;
+    color: #333;
+}
   
   .table tr:nth-child(even) {
     background-color: #f2f2f2;
@@ -48,12 +73,14 @@
     background-color: #ddd;
   }
   
-  /* Título principal */
-  h1 {
-    color: #4CAF50; /* Verde */
-    margin-bottom: 20px;
-    font-size: 24px; /* Tamaño de la fuente original */
-  }
+ /* Título */
+h1 {
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 35px;
+  text-align: center; /* Alinear a la izquierda */
+}
+
   
   /* Barra lateral */
   .sidebar {

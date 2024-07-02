@@ -4,7 +4,6 @@ import { ApiFacturacionService } from '../services/api-facturacion.service';
 
 interface Producto {
   id: number;
-  codigo: string;
   nombre: string;
   descripcion: string;
   stock: number;
@@ -137,11 +136,6 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   updateProductInCart(item: any, newCantidad: number) {
-    if (newCantidad <= 0) {
-      alert("La cantidad debe ser mayor a cero.");
-      return;
-    }
-
     const productoEnCarrito = this.carrito.find(producto => producto.id === item.id);
     if (productoEnCarrito) {
       productoEnCarrito.cantidad = newCantidad;

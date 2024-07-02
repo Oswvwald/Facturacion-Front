@@ -33,8 +33,9 @@ body {
     width: 100px; /* Ajusta el tamaño del contenedor según necesites */
     height: 100px; /* Ajusta el tamaño del contenedor según necesites */
     margin-bottom: 20px;
-    background-color: black;   
-    border-radius: 99%;
+    background-color: black;
+    border-radius: 50%; /* Ajustado a 50% para un círculo perfecto */
+    padding: 15px; /* Agrega espacio interno (padding) */
 }
 
 h1 {
@@ -68,7 +69,7 @@ h1 {
 .input-group input {
     width: 100%;
     padding: 10px 10px 10px 30px;
-    border: 1px solid #ddd;
+    border: 1px solid #bfbfbf;
     border-radius: 5px;
     outline: none;
     transition: border-color 0.3s;

@@ -80,7 +80,7 @@ h1 {
 
 /* Estilo alternativo para filas */
 .table tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Color de fondo alternativo */
+    background-color: #f2f2f200; /* Color de fondo alternativo */
 }
 
 /* Responsive */

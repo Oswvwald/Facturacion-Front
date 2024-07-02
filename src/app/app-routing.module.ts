@@ -11,12 +11,14 @@ import { TipoPagoViewComponent } from './tipo-pago-view/tipo-pago-view.component
 
 
 const routes: Routes = [
+  {path: '', redirectTo: '/login', pathMatch: 'full'}, // Redirige la ruta raíz a login
   {path: 'clientes-view', component: ClientesViewComponent},
   {path: 'sidebar', component: SidebarComponent},
   {path: 'facturas-view', component: FacturaViewComponent},
   {path: 'create-invoice', component: CreateInvoiceComponent},
   {path: 'login', component: LoginComponent},
   {path: 'tipoPago-view', component: TipoPagoViewComponent},
+  {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
 ];
 
 @NgModule({

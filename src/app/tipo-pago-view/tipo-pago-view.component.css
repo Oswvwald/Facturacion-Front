@@ -1,58 +1,84 @@
+/* Estilos generales */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(100deg, #464646, #ffffff);
+  font-family: Arial, sans-serif;
+}
 /* Contenedor principal */
 .container {
-    padding: 10px;
-    margin-left: 300px; /* Ajuste para estar más a la izquierda */
-    margin-right: 20px; /* Ajuste para menos margen derecho */
-    margin-top: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Aumentar el ancho máximo */
+  margin-right: 50px; /* Aumentar el margen derecho para separación */
+  flex-direction: column;
+  gap: 20px;
   }
   
   /* Estilo del botón Crear */
   .botonCrear {
-    background-color: #4CAF50; /* Verde */
+    background-color: #007BFF; /* Azul */
     color: white;
-    margin-bottom: 15px;
+    padding: 10px 20px;
     border: none;
-    font-size: 15px;
-    padding: 8px 11px; /* Padding original */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    align-self: flex-start; /* Alinear a la izquierda */
+    margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
   }
   
   .botonCrear:hover {
-    background-color: #45a049;
+    background-color: #0056b3; /* Azul más oscuro al hacer hover */
   }
   
-  /* Estilo de la tabla */
-  .table {
-    background-color: white;
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
     border-collapse: collapse;
-    width: calc(100% - 220px); /* Ajuste para los márgenes izquierdo y derecho */
-    margin-top: 15px;
-    font-size: 14px; /* Tamaño de la fuente original */
-  }
+    text-align: center;
+}
   
-  .table th, .table td {
-    border: 1px solid #ddd;
-    padding: 8px; /* Padding original */
-    text-align: left;
-  }
-  
-  .table th {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-  }
-  
-  .table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .table tr:hover {
-    background-color: #ddd;
-  }
+.table th,
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #61616137;
+}
+
+.table th {
+    background-color: #72BD41
+
+    ;
+    font-weight: bold;
+    color: #333;
+}
+
+.table td {
+    background-color: #ffffff; /* Color de fondo blanco */
+    color: #333;
+}
+
+/* Estilo alternativo para filas */
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alternativo */
+}
   
   /* Título principal */
   h1 {
-    color: #4CAF50; /* Verde */
-    margin-bottom: 20px;
-    font-size: 24px; /* Tamaño de la fuente original */
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 35px;
+    text-align: center; /* Alinear a la izquierda */
   }
   
   /* Barra lateral */
@@ -67,33 +93,33 @@
   
   /* Botones de acción */
   button.editar {
-    background-color: rgb(33, 78, 52); /* Color específico para Editar */
+    background-color: #007BFF; /* Azul */
     color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 10px 15px; /* Padding original */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px; /* Tamaño de la fuente original */
-    margin: 4px 2px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
+    margin-right: 10px; /* Separación entre botones */
+
   }
   
   button.editar:hover {
-    background-color: #2a6a43;
+    background-color: #0056b3; /* Azul más oscuro al hacer hover */
   }
   
   button.eliminar {
     background-color: rgb(204, 0, 0); /* Color específico para Eliminar */
     color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 10px 15px; /* Padding original */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px; /* Tamaño de la fuente original */
-    margin: 4px 2px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
   }
   
   button.eliminar:hover {

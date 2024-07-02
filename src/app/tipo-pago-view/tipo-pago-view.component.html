@@ -1,0 +1,29 @@
+<app-sidebar></app-sidebar>
+
+<div class="container">
+    <h1>Gestión de Tipos de Pago</h1>
+    <button mat-raised-button (click)="openDialog()" class="botonCrear">Crear Tipo de Pago</button>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id tipo pago</th>
+                    <th scope="col">Tipo de Pago</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tipoPago of tiposPago">
+                    <td>{{tipoPago.tipo_code}}</td>
+                    <td>{{tipoPago.tipo}}</td>
+                    <td>{{tipoPago.descripcion}}</td>
+                    <td>
+                        <button class="editar" (click)="openDialog(tipoPago, true)">Editar</button>
+                        <button class="eliminar" (click)="deleteTipoPago(tipoPago.tipo_code)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

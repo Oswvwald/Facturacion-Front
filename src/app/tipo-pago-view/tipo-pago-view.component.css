@@ -1,0 +1,139 @@
+/* Contenedor principal */
+.container {
+    padding: 10px;
+    margin-left: 300px; /* Ajuste para estar más a la izquierda */
+    margin-right: 20px; /* Ajuste para menos margen derecho */
+    margin-top: 40px;
+  }
+  
+  /* Estilo del botón Crear */
+  .botonCrear {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    margin-bottom: 15px;
+    border: none;
+    font-size: 15px;
+    padding: 8px 11px; /* Padding original */
+  }
+  
+  .botonCrear:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilo de la tabla */
+  .table {
+    background-color: white;
+    border-collapse: collapse;
+    width: calc(100% - 220px); /* Ajuste para los márgenes izquierdo y derecho */
+    margin-top: 15px;
+    font-size: 14px; /* Tamaño de la fuente original */
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px; /* Padding original */
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Título principal */
+  h1 {
+    color: #4CAF50; /* Verde */
+    margin-bottom: 20px;
+    font-size: 24px; /* Tamaño de la fuente original */
+  }
+  
+  /* Barra lateral */
+  .sidebar {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding-top: 20px;
+  }
+  
+  /* Botones de acción */
+  button.editar {
+    background-color: rgb(33, 78, 52); /* Color específico para Editar */
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Padding original */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px; /* Tamaño de la fuente original */
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+  button.editar:hover {
+    background-color: #2a6a43;
+  }
+  
+  button.eliminar {
+    background-color: rgb(204, 0, 0); /* Color específico para Eliminar */
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Padding original */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px; /* Tamaño de la fuente original */
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+  button.eliminar:hover {
+    background-color: #b30000;
+  }
+  
+  /* Responsive design */
+  @media screen and (max-width: 600px) {
+    .container {
+      margin-left: 0;
+      margin-right: 0;
+      padding: 10px;
+    }
+    
+    .table thead {
+      display: none;
+    }
+    
+    .table, .table tbody, .table tr, .table td {
+      display: block;
+      width: 100%;
+    }
+    
+    .table tr {
+      margin-bottom: 15px;
+    }
+    
+    .table td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+    }
+    
+    .table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+    }
+  }
+  

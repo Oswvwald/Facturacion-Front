@@ -1,0 +1,16 @@
+<form>
+    <div>
+        <label for="idTipo">Id tipo pago</label>
+        <input id="idTipo" placeholder="1" [(ngModel)]="tipo_code" [ngModelOptions]="{standalone:true}">
+    </div>
+    <div>
+        <label for="tipo">Tipo de Pago</label>
+        <input id="tipo" placeholder="Efectivo" [(ngModel)]="tipo" [ngModelOptions]="{standalone:true}">
+    </div>
+    <div>
+        <label for="descripcion">Descripción</label>
+        <input id="descripcion" placeholder="Pago en efectivo" [(ngModel)]="descripcion" [ngModelOptions]="{standalone:true}">
+    </div>
+    <button (click)="saveTipoPago()">{{ EditarVoF ? 'Editar' : 'Crear' }}</button>
+    <button (click)="closeDialog()">Cancelar</button>
+</form>

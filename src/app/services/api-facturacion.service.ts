@@ -45,6 +45,22 @@ export class ApiFacturacionService {
   getTipoPago(): Observable<any> {
     return this.api.get(this.url + 'tipoPago');
   }
+  //Obtener un tipo de pago por id
+  getTipoPagoById(id: string): Observable<any> {
+    return this.api.get(this.url + 'tipoPago/' + id);
+  }
+  //Crear un tipo de pago
+  createTipoPago(tipoPago: any): Observable<any> {
+    return this.api.post(this.url + 'tipoPago', tipoPago);
+  }
+  //Editar un tipo de pago
+  editTipoPago(id: string, tipoPago: any): Observable<any> {
+    return this.api.put(this.url + 'tipoPago/' + id, tipoPago);
+  }
+  //Eliminar un tipo de pago
+  deleteTipoPago(id: string): Observable<any> {
+    return this.api.delete(this.url + 'tipoPago/' + id);
+  }
 
   //Facturas
   //

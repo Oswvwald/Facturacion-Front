@@ -65,7 +65,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  border: 1px solid #306928;
+  border: 1px solid  #1e2460;
   border-radius: 4px;
   width: 200px;
 }
@@ -74,12 +74,12 @@
   display: block;
   padding: 10px;
   text-decoration: none;
-  color: black;
-  background-color: #2fc01b;
+  color: rgb(255, 255, 255);
+  background-color:  #1e2460;
 }
 
 .dropdown-menu li a:hover {
-  background-color: #f1f1f1;
+  background-color: #4250e5;
 }
 
 @media (max-width: 768px) {

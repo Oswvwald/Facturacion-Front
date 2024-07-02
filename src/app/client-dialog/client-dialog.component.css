@@ -60,5 +60,4 @@ button:hover {
 input:focus {
     outline: none;
     border-color: #1e2460;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }

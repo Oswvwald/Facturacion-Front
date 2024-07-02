@@ -6,22 +6,22 @@
   <ul class="nav flex-column nav-list">
     <li class="nav-item">
       <a class="nav-link active" routerLink="/home">
-        <i class="bi bi-house"></i> Página Principal
+        <i class="fa-solid fa-house"></i> Página Principal
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/clientes-view">
-        <i class="bi bi-speedometer2"></i> Clientes
+        <i class="fa-solid fa-user"></i>  Clientes
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/facturas-view">
-        <i class="bi bi-card-checklist"></i> Facturas
+        <i class="fa-solid fa-file-invoice"></i> Facturas
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="/products">
-        <i class="bi bi-box-seam"></i> Tipos de Pago
+        <i class="fa-solid fa-cash-register"></i> Tipos de Pago
       </a>
     </li>
     <!-- <li class="nav-item">
@@ -31,9 +31,9 @@
     </li> -->
   </ul>
   <div class="dropdown">
-    <a class="dropdown-toggle" href="#" (click)="toggleDropdown($event)">mdo</a>
+    <a class="dropdown-toggle" href="#" (click)="toggleDropdown($event)"><i class="fa-solid fa-bars" style="margin-right: 10px;"></i> User</a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" [style.display]="dropdownDisplay">
-      <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+      <li><a class="dropdown-item" href="#"><i class="fa-solid fa-arrow-right-to-bracket" style="margin-right: 10px;"></i>Cerrar Sesión</a></li>
     </ul>
   </div>
 </nav>

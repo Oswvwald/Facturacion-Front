@@ -74,7 +74,7 @@ body {
 
 /* Estilo alternativo para filas */
 .table tbody tr:nth-child(even) {
-  background-color: #950f0f; /* Color de fondo alternativo */
+  background-color: #f8f8f800; /* Color de fondo alternativo */
 }
   
  /* Título */

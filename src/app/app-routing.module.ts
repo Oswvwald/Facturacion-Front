@@ -18,8 +18,8 @@ const routes: Routes = [
   {path: 'create-invoice', component: CreateInvoiceComponent},
   {path: 'login', component: LoginComponent},
   {path: 'tipoPago-view', component: TipoPagoViewComponent},
-  {path: 'inicio', component: PaginaPrincipalComponent},
- // {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
+  {path: 'paginaPrincipal', component: PaginaPrincipalComponent},
+  {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
 ];
 
 @NgModule({

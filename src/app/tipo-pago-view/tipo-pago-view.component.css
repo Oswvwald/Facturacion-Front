@@ -8,6 +8,7 @@ body {
   background: linear-gradient(100deg, #464646, #ffffff);
   font-family: Arial, sans-serif;
 }
+
 /* Contenedor principal */
 .container {
   background-color: #fff;
@@ -18,146 +19,147 @@ body {
   margin-right: 50px; /* Aumentar el margen derecho para separación */
   flex-direction: column;
   gap: 20px;
-  }
-  
-  /* Estilo del botón Crear */
-  .botonCrear {
-    background-color: #007BFF; /* Azul */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    align-self: flex-start; /* Alinear a la izquierda */
-    margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
-  }
-  
-  .botonCrear:hover {
-    background-color: #0056b3; /* Azul más oscuro al hacer hover */
-  }
-  
-  .table-responsive {
-    width: 100%;
-    overflow-x: auto;
+}
+
+/* Estilo del botón Crear */
+.botonCrear {
+  background-color: #007BFF; /* Azul */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  align-self: flex-start; /* Alinear a la izquierda */
+  margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
+}
+
+.botonCrear:hover {
+  background-color: #0056b3; /* Azul más oscuro al hacer hover */
+}
+
+/* Estilos para la tabla */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
 }
-  
+
 .table th,
 .table td {
-    padding: 10px;
-    border-bottom: 1px solid #61616137;
+  padding: 10px;
+  border-bottom: 1px solid #00000037;
+  vertical-align: middle; /* Centrar verticalmente */
 }
 
 .table th {
-    background-color: #1e2460;
-    font-weight: bold;
-    color: #ffffff;
+  background-color: #1e2460;
+  color: #ffffff;
+  text-align: center; /* Alinear texto al centro */
 }
 
 .table td {
-    background-color: #ffffff; /* Color de fondo blanco */
-    color: #333;
+  background-color: #ffffff; /* Color de fondo blanco */
+  color: #000000;
 }
 
 /* Estilo alternativo para filas */
 .table tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Color de fondo alternativo */
+  background-color: #f2f2f2; /* Color de fondo alternativo */
 }
-  
-  /* Título principal */
-  h1 {
-    margin-bottom: 30px;
-    color: #333;
-    font-size: 35px;
-    text-align: center; /* Alinear a la izquierda */
-  }
-  
-  /* Barra lateral */
-  .sidebar {
-    position: fixed;
-    width: 200px;
-    height: 100%;
-    background-color: #4CAF50; /* Verde */
-    color: white;
-    padding-top: 20px;
-  }
-  
-  /* Botones de acción */
-  button.editar {
-    background-color: #007BFF; /* Azul */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
-    margin-right: 10px; /* Separación entre botones */
 
-  }
-  
-  button.editar:hover {
-    background-color: #0056b3; /* Azul más oscuro al hacer hover */
-  }
-  
-  button.eliminar {
-    background-color: rgb(204, 0, 0); /* Color específico para Eliminar */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
-  }
-  
-  button.eliminar:hover {
-    background-color: #b30000;
-  }
-  
-  /* Responsive design */
-  @media screen and (max-width: 600px) {
-    .container {
+/* Título principal */
+h1 {
+  margin-bottom: 30px;
+  color: #000000;
+  font-size: 35px;
+  text-align: center; /* Alinear a la izquierda */
+}
+
+/* Barra lateral */
+.sidebar {
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  color: white;
+  padding-top: 20px;
+}
+
+/* Botones de acción */
+button.editar {
+  background-color: #007BFF; /* Azul */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
+  margin-right: 10px; /* Separación entre botones */
+}
+
+button.editar:hover {
+  background-color: #0056b3; /* Azul más oscuro al hacer hover */
+}
+
+button.eliminar {
+  background-color: rgb(204, 0, 0); /* Color específico para Eliminar */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
+}
+
+button.eliminar:hover {
+  background-color: #b30000;
+}
+
+/* Responsive design */
+@media screen and (max-width: 600px) {
+  .container {
       margin-left: 0;
       margin-right: 0;
       padding: 10px;
-    }
-    
-    .table thead {
+  }
+
+  .table thead {
       display: none;
-    }
-    
-    .table, .table tbody, .table tr, .table td {
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
       display: block;
       width: 100%;
-    }
-    
-    .table tr {
+  }
+
+  .table tr {
       margin-bottom: 15px;
-    }
-    
-    .table td {
+  }
+
+  .table td {
       text-align: right;
       padding-left: 50%;
       position: relative;
-    }
-    
-    .table td::before {
+  }
+
+  .table td::before {
       content: attr(data-label);
       position: absolute;
       left: 0;
       width: 50%;
       padding-left: 15px;
-      font-weight: bold;
-    }
   }
-  
+}

@@ -5,8 +5,7 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background: linear-gradient(100deg, #464646, #ffffff);
-  font-family: Arial, sans-serif;
+  background: linear-gradient(100deg, #000000, #ffffff);
 }
 
 /* Contenedor principal */
@@ -21,8 +20,7 @@ body {
   gap: 20px;
 }
 
-
-  /* Botón Crear Factura */
+/* Botón Crear Factura */
 .botonCrear {
   background-color: #007BFF; /* Azul */
   color: white;
@@ -35,11 +33,10 @@ body {
   align-self: flex-start; /* Alinear a la izquierda */
   margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
 }
-  
-  .botonCrear:hover {
-    background-color: #2c38c5;
-  }
-  
+
+.botonCrear:hover {
+  background-color: #2c38c5;
+}
 
 /* Estilos para la tabla */
 .table-responsive {
@@ -56,18 +53,19 @@ body {
 .table th,
 .table td {
   padding: 5px;
-  border-bottom: 1px solid #61616137;
+  border-bottom: 1px solid #04040437;
   vertical-align: middle; /* Centrar verticalmente */
 }
 
 .table th {
   background-color: #1e2460;
   color: #ffffff;
+  font-weight: normal; /* Cambiar a normal para eliminar la negrita */
 }
 
 .table td {
   background-color: #ffffff; /* Color de fondo blanco */
-  color: #333;
+  color: #000000;
 }
 
 /* Estilo alternativo para filas */
@@ -78,7 +76,7 @@ body {
 /* Título */
 h1 {
   margin-bottom: 30px;
-  color: #333;
+  color: #000000;
   font-size: 35px;
   text-align: center; /* Alinear a la izquierda */
   line-height: 1.2; /* Ajustar la altura de línea si es necesario */
@@ -89,7 +87,6 @@ h1 {
   position: fixed;
   width: 200px;
   height: 100%;
-  background-color: #4CAF50; /* Verde */
   color: white;
   padding-top: 20px;
 }

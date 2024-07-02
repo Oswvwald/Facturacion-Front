@@ -1,6 +1,5 @@
 <app-sidebar></app-sidebar>
 
-
 <div class="container">
   <h1>Gestión de Facturas</h1>
   <div class="container">
@@ -55,9 +54,9 @@
         </div>
         <div>
           <label for="iva">IVA a aplicar (%):</label>
-          <input id="iva" type="number" [(ngModel)]="iva" />
+          <input id="iva" type="number" [(ngModel)]="iva" min="0" />
         </div>
-        <button (click)="createInvoice()">Crear Factura</button>
+        <button (click)="createInvoice()">Guardar Factura</button>
       </div>
     </div>
 
@@ -72,7 +71,7 @@
         <option *ngFor="let producto of filteredProductos" [ngValue]="producto">{{ producto.nombre }}</option>
       </select>
       <label for="cantidad">Cantidad:</label>
-      <input id="cantidad" type="number" [(ngModel)]="cantidad" />
+      <input id="cantidad" type="number" [(ngModel)]="cantidad" min="1" />
       <button (click)="addProductToCart()">Agregar al Carrito</button>
     </div>
 
@@ -95,7 +94,9 @@
           <td>{{ item.codigo }}</td>
           <td>{{ item.nombre }}</td>
           <td>{{ item.descripcion }}</td>
-          <td>{{ item.cantidad }}</td>
+          <td>
+            <input type="number" [(ngModel)]="item.cantidad" (change)="updateProductInCart(item, item.cantidad)" min="1" />
+          </td>
           <td>{{ item.pvp }}</td>
           <td>{{ item.subtotal }}</td>
           <td>{{ item.total }}</td>

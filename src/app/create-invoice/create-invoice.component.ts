@@ -4,6 +4,7 @@ import { ApiFacturacionService } from '../services/api-facturacion.service';
 
 interface Producto {
   id: number;
+  codigo: string;
   nombre: string;
   descripcion: string;
   stock: number;
@@ -99,6 +100,11 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   addProductToCart() {
+    if (this.iva <= 0) {
+      alert("Por favor ingrese el valor del IVA antes de agregar productos al carrito.");
+      return;
+    }
+
     if (this.selectedProduct && this.cantidad > 0) {
       const productoEnCarrito = this.carrito.find(item => item.id === this.selectedProduct.id);
       if (productoEnCarrito) {
@@ -130,19 +136,37 @@ export class CreateInvoiceComponent implements OnInit {
     }
   }
 
+  updateProductInCart(item: any, newCantidad: number) {
+    if (newCantidad <= 0) {
+      alert("La cantidad debe ser mayor a cero.");
+      return;
+    }
+
+    const productoEnCarrito = this.carrito.find(producto => producto.id === item.id);
+    if (productoEnCarrito) {
+      productoEnCarrito.cantidad = newCantidad;
+      productoEnCarrito.subtotal = newCantidad * productoEnCarrito.pvp;
+      productoEnCarrito.total = productoEnCarrito.gravaIva 
+        ? productoEnCarrito.subtotal * (1 + this.iva / 100) 
+        : productoEnCarrito.subtotal;
+      this.updateTotalCarrito();
+    }
+  }
+
   updateTotalCarrito() {
     this.totalCarrito = this.carrito.reduce((acc, item) => acc + item.total, 0);
   }
 
   createInvoice() {
     const detalleFactura = this.carrito.map(item => ({
+      factura_id: this.facturaId,
       producto_id: item.id,
       cantidad: item.cantidad,
       precio_unitario: item.pvp,
       incluye_iva: item.gravaIva,
       porcentaje_iva: item.gravaIva ? this.iva : 0,
       subtotal: item.subtotal,
-      total: item.gravaIva ? item.subtotal * (1 + this.iva / 100) : item.subtotal
+      total: item.total
     }));
 
     const factura = {

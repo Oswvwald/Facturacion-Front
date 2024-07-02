@@ -6,9 +6,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: linear-gradient(135deg, #A8E063 0%, #56AB2F 100%);
+  background: linear-gradient(135deg, #3ba0de 0%, #1e2460 100%);
   color: #ffffff;
-  padding-top: 20px;
+  padding-top: 30px;
   transition: width 0.3s;
 }
 

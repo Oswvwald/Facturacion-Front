@@ -56,11 +56,9 @@ body {
 }
 
 .table th {
-    background-color: #72BD41
-
-    ;
+    background-color: #1e2460;
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
 }
 
 .table td {

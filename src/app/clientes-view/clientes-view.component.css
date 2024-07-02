@@ -37,7 +37,7 @@ body {
 }
   
   .botonCrear:hover {
-    background-color: #45a049;
+    background-color: #2c38c5;
   }
   
 
@@ -55,16 +55,14 @@ body {
 
 .table th,
 .table td {
-  padding: 10px;
+  padding: 5px;
   border-bottom: 1px solid #61616137;
 }
 
 .table th {
-  background-color: #72BD41
-
-  ;
+  background-color: #1e2460;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
 }
 
 .table td {
@@ -98,7 +96,7 @@ h1 {
   
   /* Botones de acción */
   button.editar {
-    background-color: #007BFF; /* Azul */
+  background-color: #007BFF; /* Azul */
   color: white;
   padding: 10px 20px;
   border: none;

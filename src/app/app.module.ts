@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { TipoPagoViewComponent } from './tipo-pago-view/tipo-pago-view.component';
 import { TipoPagoDialogComponent } from './tipo-pago-dialog/tipo-pago-dialog.component';
+import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TipoPagoDialogComponent } from './tipo-pago-dialog/tipo-pago-dialog.com
     LoginComponent,
     TipoPagoViewComponent,
     TipoPagoDialogComponent,
+    PaginaPrincipalComponent,
   ],
   imports: [
     BrowserModule,

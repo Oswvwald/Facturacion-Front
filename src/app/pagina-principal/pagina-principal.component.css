@@ -1,0 +1,142 @@
+/* custom.css */
+*{
+    margin:0;
+    padding: 0;
+    border:0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+body {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+}
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 63px;
+    background: #171717;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+.navbar{
+    display: flex;
+    margin-right: 10px;
+}
+.logo{
+    text-decoration: none;
+    color: #ffff;
+    text-transform: uppercase;
+    font-size: 30px;
+}
+.logo a{
+    text-decoration: none;
+    color: #ffff;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+.navbar a {
+    display: block;
+    padding: 23px 20px;
+    color: white;
+    text-decoration: none;
+    
+    font-size: 15px;
+}
+.navbar a:hover{
+    background: #5bc757;
+    padding: 15px 10px;
+    border-radius: 10px;
+  
+}
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    position: relative;
+    height: 80vh !important;
+    background: url(../../assets/images/v2fondo.jpg);
+    background-size: cover;
+}
+.parr{
+    font-size: small;
+}
+.header::before {
+ 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
+    background-color: rgba(0, 0, 0, 0.8 ); /* Cambia el valor alfa (0.5) para ajustar la opacidad */
+   
+}
+.title{
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 500;
+   
+    color: #ffff;
+
+}
+p{
+ margin-bottom: 40px;
+ font-size: 18px;
+ color: #ffff;
+ padding: 0 250px;
+}
+.btn{
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 40px;
+    border: 2px solid #9c27b0;
+    color: white;
+    text-decoration: none;
+    background-color: rgb(34, 204, 71);
+}
+.content{
+    height:  50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.sau{
+    padding: 30px;
+    background: #1f1d1d;
+}
+.box-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap ;
+    text-align: center;
+
+}
+.box-container .box{
+    height: 11rem;
+    width: 17rem;
+    background-color:  #101010;
+    text-align: center;
+    border-radius: 1rem;
+    box-shadow:  0 .3rem 5rem rgba(0,0, 0, .5);
+    margin:  2rem;
+}
+.box-container .box h3{
+    font-size:  20px;
+    color: aquamarine;
+
+}
+.footer{
+    font-size: 20px;
+    color: white;
+}

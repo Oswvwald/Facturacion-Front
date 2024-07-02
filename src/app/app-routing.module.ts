@@ -8,7 +8,7 @@ import { FacturaViewComponent } from './factura-view/factura-view.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { LoginComponent } from './login/login.component';
 import { TipoPagoViewComponent } from './tipo-pago-view/tipo-pago-view.component';
-
+import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'}, // Redirige la ruta raíz a login
@@ -18,7 +18,8 @@ const routes: Routes = [
   {path: 'create-invoice', component: CreateInvoiceComponent},
   {path: 'login', component: LoginComponent},
   {path: 'tipoPago-view', component: TipoPagoViewComponent},
-  {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
+  {path: 'inicio', component: PaginaPrincipalComponent},
+ // {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
 ];
 
 @NgModule({

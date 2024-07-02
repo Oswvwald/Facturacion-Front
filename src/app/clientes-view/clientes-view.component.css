@@ -98,16 +98,16 @@ h1 {
   
   /* Botones de acción */
   button.editar {
-    background-color: rgb(33, 78, 52); /* Color específico para Editar */
-    color: white;
-    border: none;
-    padding: 10px 15px; /* Padding original */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px; /* Tamaño de la fuente original */
-    margin: 4px 2px;
-    cursor: pointer;
+    background-color: #007BFF; /* Azul */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  align-self: flex-start; /* Alinear a la izquierda */
+  margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
   }
   
   button.editar:hover {
@@ -115,16 +115,16 @@ h1 {
   }
   
   button.eliminar {
-    background-color: rgb(204, 0, 0); /* Color específico para Eliminar */
+    background-color: #e80909; /* Azul */
     color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 10px 15px; /* Padding original */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px; /* Tamaño de la fuente original */
-    margin: 4px 2px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    align-self: flex-start; /* Alinear a la izquierda */
+    margin-bottom: 20px; /* Añadir margen inferior para separar del botón */
   }
   
   button.eliminar:hover {

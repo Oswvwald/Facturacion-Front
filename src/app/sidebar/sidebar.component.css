@@ -8,7 +8,7 @@
   left: 0;
   background: linear-gradient(135deg, #3ba0de 0%, #1e2460 100%);
   color: #ffffff;
-  padding-top: 30px;
+  padding-top: 20px;
   transition: width 0.3s;
 }
 
@@ -18,23 +18,22 @@
 }
 
 .sidebar-logo {
-  width: 50%;
+  width: 60%;
   /* Aumenta el porcentaje para hacer el logo más grande */
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .nav-link {
   color: #ffffff;
-  padding: 10px;
+  padding:10px;
   display: flex;
   align-items: center;
-  font-weight: bold;
   font-size: 16px;
 }
 
 .nav-list {
   margin-top: 50px;
-  /* Ajusta este valor según sea necesario */
+  margin-left: 20px;
 }
 
 .nav-link:hover {
@@ -55,9 +54,8 @@
   color: #ffffff;
   display: flex;
   align-items: center;
-  margin-left: 20px;
-  font-weight: bold;
-  margin-top: 75%;
+  margin-left: 25px;
+  margin-top: 130%;
   /* Ajusta este valor según la cantidad de espacio deseado */
 }
 

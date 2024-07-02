@@ -26,7 +26,6 @@ form div.full-width {
 
 label {
     margin-bottom: 5px;
-    font-weight: bold;
     color: #333;
 }
 
@@ -36,7 +35,6 @@ input[type="email"] {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: transparent; /* Hacer los cuadros transparentes */
     color: #333; /* Color del texto */
 }
 

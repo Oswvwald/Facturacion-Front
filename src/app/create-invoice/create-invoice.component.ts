@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from '../models/client.model';  
+import { Cliente } from '../models/client.model';
 import { ApiFacturacionService } from '../services/api-facturacion.service';
 
 interface Producto {
   id: number;
   nombre: string;
   descripcion: string;
-  stock: number;
+  stockProducto: number;
   costo: number;
   pvp: number;
   gravaIva: boolean;
@@ -49,6 +49,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.getClientes();
     this.getTiposPago();
     this.getProductos();
+    this.calculatePages();
   }
 
   getClientes() {
@@ -89,18 +90,20 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   filterProducts() {
-    this.filteredProductos = this.productos.filter(producto => 
+    this.filteredProductos = this.productos.filter(producto =>
       producto.nombre.toLowerCase().includes(this.productSearch.toLowerCase())
     );
   }
 
-  onSelectProduct() {
-    // Puedes agregar lógica adicional aquí si es necesario
+  addProductToCartFromModal(producto: Producto): void {
+    this.selectedProduct = producto;
+    this.cantidad = 1; // O la cantidad que desees por defecto
+    this.addProductToCart();
   }
 
   addProductToCart() {
     if (this.iva <= 0) {
-      alert("Por favor ingrese el valor del IVA antes de agregar productos al carrito.");
+      this.showAlert('Por favor ingrese el valor del IVA antes de agregar productos al carrito.', 'error', 'warning');
       return;
     }
 
@@ -109,15 +112,15 @@ export class CreateInvoiceComponent implements OnInit {
       if (productoEnCarrito) {
         productoEnCarrito.cantidad += this.cantidad;
         productoEnCarrito.subtotal = productoEnCarrito.cantidad * productoEnCarrito.pvp;
-        productoEnCarrito.total = productoEnCarrito.gravaIva 
-          ? productoEnCarrito.subtotal * (1 + this.iva / 100) 
+        productoEnCarrito.total = productoEnCarrito.gravaIva
+          ? productoEnCarrito.subtotal * (1 + this.iva / 100)
           : productoEnCarrito.subtotal;
       } else {
         const itemCarrito = {
           ...this.selectedProduct,
           cantidad: this.cantidad,
           subtotal: this.cantidad * this.selectedProduct.pvp,
-          total: this.selectedProduct.gravaIva 
+          total: this.selectedProduct.gravaIva
             ? this.cantidad * this.selectedProduct.pvp * (1 + this.iva / 100)
             : this.cantidad * this.selectedProduct.pvp
         };
@@ -140,15 +143,11 @@ export class CreateInvoiceComponent implements OnInit {
     if (productoEnCarrito) {
       productoEnCarrito.cantidad = newCantidad;
       productoEnCarrito.subtotal = newCantidad * productoEnCarrito.pvp;
-      productoEnCarrito.total = productoEnCarrito.gravaIva 
-        ? productoEnCarrito.subtotal * (1 + this.iva / 100) 
+      productoEnCarrito.total = productoEnCarrito.gravaIva
+        ? productoEnCarrito.subtotal * (1 + this.iva / 100)
         : productoEnCarrito.subtotal;
       this.updateTotalCarrito();
     }
-  }
-
-  updateTotalCarrito() {
-    this.totalCarrito = this.carrito.reduce((acc, item) => acc + item.total, 0);
   }
 
   createInvoice() {
@@ -191,5 +190,48 @@ export class CreateInvoiceComponent implements OnInit {
     this.totalCarrito = 0;
     CreateInvoiceComponent.ultimoNumeroFactura++;
     this.facturaId = 'FACT-' + CreateInvoiceComponent.ultimoNumeroFactura.toString().padStart(5, '0');
+  }
+
+  // Variables para la paginación
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPages: number;
+  pages: number[] = [];
+
+  calculatePages() {
+    this.totalPages = Math.ceil(this.carrito.length / this.itemsPerPage);
+    this.pages = Array.from({ length: this.totalPages }, (v, k) => k + 1);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+  }
+
+  get paginatedItems() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.carrito.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  showAlert(message: string, type: string, icon: string) {
+    // Example implementation using console.log
+    // Replace this with your actual alert display logic
+    console.log(`Alert: ${message}, Type: ${type}, Icon: ${icon}`);
+  }
+
+  updateTotalCarrito() {
+    this.totalCarrito = this.carrito.reduce((acc, item) => acc + item.total, 0);
+    this.calculatePages();
   }
 }

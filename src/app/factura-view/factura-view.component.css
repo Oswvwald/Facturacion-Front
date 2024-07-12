@@ -92,3 +92,25 @@ h1 {
         padding: 8px;
     }
 }
+
+
+/* Estilos para el campo de búsqueda */
+.input-group {
+    margin-bottom: 20px;
+    width: 200px; /* Asegurarse de que el campo sea pequeño */
+    float: right;
+}
+
+/* Estilos para la paginación */
+.pagination .page-item .page-link {
+    color: #007BFF;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+}

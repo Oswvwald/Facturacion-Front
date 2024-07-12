@@ -1,10 +1,17 @@
 <app-sidebar></app-sidebar>
+
 <div class="container">
     <h1>Gestión de Clientes</h1>
     <button mat-raised-button (click)="openDialog()" class="botonCrear">Crear Usuario</button>
+    
+    <!-- Campo de búsqueda -->
+    <div class="input-group mb-3" style="width: 200px; float: right;">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="buscarTexto" (input)="filtrarClientes()">
+    </div>
+
     <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
+        <table class="table table-striped">
+            <thead>
                 <tr>
                     <th scope="col">Cédula</th>
                     <th scope="col">Nombres</th>
@@ -19,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let cliente of clientes">
+                <tr *ngFor="let cliente of clientesMostrados">
                     <td>{{cliente.cedula}}</td>
                     <td>{{cliente.nombres}}</td>
                     <td>{{cliente.apellidos}}</td>
@@ -27,7 +34,7 @@
                     <td>{{cliente.direccion}}</td>
                     <td>{{cliente.telefono}}</td>
                     <td>{{cliente.email}}</td>
-                    <td>{{cliente.tipoPagoNombre}}</td> <!-- Mostrar el nombre del tipo de pago -->
+                    <td>{{cliente.tipoPagoNombre}}</td>
                     <td>{{cliente.estado ? 'Activo' : 'Inactivo'}}</td>
                     <td>
                         <button class="editar" (click)="openDialog(cliente, true)">Editar</button>
@@ -36,5 +43,23 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Proceso de paginación -->
+        <div class="d-flex justify-content-between align-items-center">
+            <span>Mostrando {{(paginaActual - 1) * clientesPorPagina + 1}} a {{paginaActual * clientesPorPagina > clientesFiltrados.length ? clientesFiltrados.length : paginaActual * clientesPorPagina}} de {{clientesFiltrados.length}} clientes</span>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mb-0">
+                    <li class="page-item" [class.disabled]="paginaActual === 1">
+                        <a class="page-link" href="#" (click)="cambiarPagina(paginaActual - 1, $event)">Previous</a>
+                    </li>
+                    <li class="page-item" [class.active]="paginaActual === n" *ngFor="let n of getNumeroPaginas()">
+                        <a class="page-link" href="#" (click)="cambiarPagina(n, $event)">{{n}}</a>
+                    </li>
+                    <li class="page-item" [class.disabled]="paginaActual === getNumeroPaginas().length">
+                        <a class="page-link" href="#" (click)="cambiarPagina(paginaActual + 1, $event)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>

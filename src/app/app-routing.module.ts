@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'create-invoice', component: CreateInvoiceComponent},
   {path: 'login', component: LoginComponent},
   {path: 'tipoPago-view', component: TipoPagoViewComponent},
-  {path: 'paginaPrincipal', component: PaginaPrincipalComponent},
+  {path: 'homePage', component: PaginaPrincipalComponent},
   {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
 ];
 

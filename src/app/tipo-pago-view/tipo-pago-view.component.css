@@ -54,19 +54,19 @@ body {
 .table th,
 .table td {
   padding: 10px;
-  border-bottom: 1px solid #00000037;
+  border-bottom: 1px solid #61616137;
   vertical-align: middle; /* Centrar verticalmente */
 }
 
 .table th {
   background-color: #1e2460;
   color: #ffffff;
-  text-align: center; /* Alinear texto al centro */
+  font-weight: normal; /* Cambiar a normal para eliminar la negrita */
 }
 
 .table td {
   background-color: #ffffff; /* Color de fondo blanco */
-  color: #000000;
+  color: #333;
 }
 
 /* Estilo alternativo para filas */

@@ -1,44 +1,184 @@
-<form>
-    <div>
-      <label for="cedula">Cedula</label>
-      <input id="cedula" placeholder="1234567890" [(ngModel)]="cedula" [ngModelOptions]="{standalone:true}">
+<form (ngSubmit)="saveClient()" #clientForm="ngForm">
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="cedula"
+        placeholder="1234567890"
+        [(ngModel)]="cedula"
+        name="cedula"
+        #cedulaRef="ngModel"
+        required
+        pattern="^[0-9]{10}$"
+        (ngModelChange)="checkCedula()"
+        [ngClass]="{'is-invalid': !cedulaValida && cedulaRef.touched}"
+      />
+      <label for="cedula">Cédula</label>
+      <div *ngIf="!cedulaValida && cedulaRef.touched" class="invalid-feedback">
+        La cédula es inválida.
+      </div>
     </div>
-    <div>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="nombres"
+        placeholder="Daniel"
+        [(ngModel)]="nombres"
+        name="nombres"
+        #nombresRef="ngModel"
+        required
+        [ngClass]="{'is-invalid': nombresRef.invalid && nombresRef.touched}"
+      />
       <label for="nombres">Nombres</label>
-      <input id="nombres" placeholder="Daniel" [(ngModel)]="nombres" [ngModelOptions]="{standalone:true}">
+      <div *ngIf="nombresRef.invalid && nombresRef.touched" class="invalid-feedback">
+        Los nombres son requeridos.
+      </div>
     </div>
-    <div>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="apellidos"
+        placeholder="Gonzalez"
+        [(ngModel)]="apellidos"
+        name="apellidos"
+        #apellidosRef="ngModel"
+        required
+        [ngClass]="{'is-invalid': apellidosRef.invalid && apellidosRef.touched}"
+      />
       <label for="apellidos">Apellidos</label>
-      <input id="apellidos" placeholder="Gonzalez" [(ngModel)]="apellidos" [ngModelOptions]="{standalone:true}">
+      <div *ngIf="apellidosRef.invalid && apellidosRef.touched" class="invalid-feedback">
+        Los apellidos son requeridos.
+      </div>
     </div>
-    <div>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="date"
+        class="form-control"
+        id="fechaNacimiento"
+        placeholder="Fecha de nacimiento"
+        [(ngModel)]="fecha_Nacimiento"
+        name="fechaNacimiento"
+        #fechaNacimientoRef="ngModel"
+        required
+        [ngClass]="{'is-invalid': fechaNacimientoRef.invalid && fechaNacimientoRef.touched}"
+      />
       <label for="fechaNacimiento">Fecha de nacimiento</label>
-      <input type="date" id="fechaNacimiento" [(ngModel)]="fecha_Nacimiento" [ngModelOptions]="{standalone:true}">
+      <div *ngIf="fechaNacimientoRef.invalid && fechaNacimientoRef.touched" class="invalid-feedback">
+        La fecha de nacimiento es requerida.
+      </div>
     </div>
-    <div class="full-width">
-      <label for="direccion">Direccion</label>
-      <input id="direccion" placeholder="Calle 123" [(ngModel)]="direccion" [ngModelOptions]="{standalone:true}">
+  </div>
+
+  <div class="mb-3 full-width">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="direccion"
+        placeholder="Calle 123"
+        [(ngModel)]="direccion"
+        name="direccion"
+        #direccionRef="ngModel"
+        required
+        [ngClass]="{'is-invalid': direccionRef.invalid && direccionRef.touched}"
+      />
+      <label for="direccion">Dirección</label>
+      <div *ngIf="direccionRef.invalid && direccionRef.touched" class="invalid-feedback">
+        La dirección es requerida.
+      </div>
     </div>
-    <div>
-      <label for="telefono">Telefono</label>
-      <input id="telefono" placeholder="1234567890" [(ngModel)]="telefono" [ngModelOptions]="{standalone:true}">
+  </div>
+
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="tel"
+        class="form-control"
+        id="telefono"
+        placeholder="1234567890"
+        [(ngModel)]="telefono"
+        name="telefono"
+        #telefonoRef="ngModel"
+        required
+        pattern="^[0-9]{10}$"
+        [ngClass]="{'is-invalid': telefonoRef.invalid && telefonoRef.touched}"
+      />
+      <label for="telefono">Teléfono</label>
+      <div *ngIf="telefonoRef.invalid && telefonoRef.touched" class="invalid-feedback">
+        El teléfono debe tener 10 dígitos.
+      </div>
     </div>
-    <div>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="exp@gmail.com"
+        [(ngModel)]="email"
+        name="email"
+        #emailRef="ngModel"
+        required
+        email
+        [ngClass]="{'is-invalid': emailRef.invalid && emailRef.touched}"
+      />
       <label for="email">Email</label>
-      <input id="email" placeholder="exp@gmail.com" [(ngModel)]="email" [ngModelOptions]="{standalone:true}">
+      <div *ngIf="emailRef.invalid && emailRef.touched" class="invalid-feedback">
+        Proporcione un correo electrónico válido.
+      </div>
     </div>
-    <div>
-      <label for="tipoPago">Tipo de Pago</label>
-      <select id="tipoPago" [(ngModel)]="id_tipo_pago" [ngModelOptions]="{standalone: true}" required>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-floating">
+      <select
+        class="form-select"
+        id="tipoPago"
+        [(ngModel)]="id_tipo_pago"
+        name="tipoPago"
+        #tipoPagoRef="ngModel"
+        required
+        [ngClass]="{'is-invalid': tipoPagoRef.invalid && tipoPagoRef.touched}"
+      >
         <option value="" disabled selected>Seleccione una opción</option>
         <option *ngFor="let tipo of tipoPago" [value]="tipo.tipo_code">{{tipo.tipo}}</option>
       </select>
+      <label for="tipoPago">Tipo de Pago</label>
+      <div *ngIf="tipoPagoRef.invalid && tipoPagoRef.touched" class="invalid-feedback">
+        Seleccione un tipo de pago.
+      </div>
     </div>
-    <div>
-      <label for="estadoActivo">Estado</label>
-      <input type="checkbox" id="estadoActivo" [(ngModel)]="estado" [ngModelOptions]="{standalone:true}">
+  </div>
+
+  <div class="mb-3">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="estadoActivo"
+        [(ngModel)]="estado"
+        name="estado"
+      />
+      <label class="form-check-label" for="estadoActivo">
+        Activo
+      </label>
     </div>
-    <button (click)="saveClient()">{{ editarVoF ? 'Editar' : 'Crear' }}</button>
-    <button (click)="closeDialog()">Cancelar</button>
-  </form>
-  
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">{{ editarVoF ? 'Editar' : 'Crear' }}</button>
+  <button type="button" class="btn btn-secondary" (click)="closeDialog()">Cancelar</button>
+</form>

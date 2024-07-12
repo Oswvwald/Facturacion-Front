@@ -20,6 +20,7 @@ export class ClientDialogComponent implements OnInit {
   id_tipo_pago: number;
   estado: boolean = false; // Inicializar en false
   editarVoF: boolean;
+  cedulaValida: boolean = true; // Variable para controlar la validez de la cédula
 
   tipoPago: Array<any> = [];
 
@@ -46,7 +47,19 @@ export class ClientDialogComponent implements OnInit {
     this.getTipoPago();
   }
 
-  saveClient(){
+  saveClient() {
+    // Validar cédula ecuatoriana antes de continuar
+    if (!this.validarCedula(this.cedula)) {
+      console.log('Cédula inválida');
+      return;
+    }
+
+    // Validar fecha de nacimiento
+    if (this.fecha_Nacimiento > new Date()) {
+      console.log('La fecha de nacimiento no puede ser mayor a la fecha actual');
+      return;
+    }
+
     const cliente = {
       cedula: this.cedula,
       nombres: this.nombres,
@@ -59,7 +72,7 @@ export class ClientDialogComponent implements OnInit {
       estado: this.estado
     };
 
-    if(this.editarVoF){
+    if (this.editarVoF) {
       this.api.editClient(this.cedula, cliente).subscribe((res: any) => {
         console.log('Cliente editado exitosamente');
       }, (error: any) => {
@@ -75,15 +88,46 @@ export class ClientDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close();
   }
 
-  getTipoPago(){
+  getTipoPago() {
     this.api.getTipoPago().subscribe((res: any) => {
       this.tipoPago = res.tipoPago;
     }, (error: any) => {
       console.log(error);
     });
   }
+
+  // Función para validar cédula ecuatoriana
+  validarCedula(cedula: string): boolean {
+    if (cedula.length !== 10) {
+      return false;
+    }
+
+    const coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+    let suma = 0;
+
+    for (let i = 0; i < 9; i++) {
+      let valor = parseInt(cedula.charAt(i), 10) * coeficientes[i];
+      if (valor >= 10) {
+        valor = valor - 9;
+      }
+      suma += valor;
+    }
+
+    const digitoVerificador = 10 - (suma % 10);
+    if (digitoVerificador === 10) {
+      return parseInt(cedula.charAt(9), 10) === 0;
+    } else {
+      return parseInt(cedula.charAt(9), 10) === digitoVerificador;
+    }
+  }
+
+  // Función para verificar la validez de la cédula en tiempo real
+  checkCedula() {
+    this.cedulaValida = this.validarCedula(this.cedula);
+  }
+
 }

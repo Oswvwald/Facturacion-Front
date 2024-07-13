@@ -3,7 +3,8 @@ import { Cliente } from '../models/client.model';
 import { ApiFacturacionService } from '../services/api-facturacion.service';
 
 interface Producto {
-  id: number;
+  
+  iD_Producto: number;
   nombre: string;
   descripcion: string;
   stockProducto: number;
@@ -91,44 +92,55 @@ export class CreateInvoiceComponent implements OnInit {
 
   filterProducts() {
     this.filteredProductos = this.productos.filter(producto =>
-      producto.nombre.toLowerCase().includes(this.productSearch.toLowerCase())
+        producto.nombre.toLowerCase().includes(this.productSearch.toLowerCase())
     );
-  }
+    console.log('Productos filtrados:', this.filteredProductos); // Depuración
+}
+
 
   addProductToCartFromModal(producto: Producto): void {
     this.selectedProduct = producto;
     this.cantidad = 1; // O la cantidad que desees por defecto
+   
     this.addProductToCart();
   }
 
   addProductToCart() {
     if (this.iva <= 0) {
-      this.showAlert('Por favor ingrese el valor del IVA antes de agregar productos al carrito.', 'error', 'warning');
-      return;
+        this.showAlert('Por favor ingrese el valor del IVA antes de agregar productos al carrito.', 'error', 'warning');
+        return;
     }
 
     if (this.selectedProduct && this.cantidad > 0) {
-      const productoEnCarrito = this.carrito.find(item => item.id === this.selectedProduct.id);
-      if (productoEnCarrito) {
-        productoEnCarrito.cantidad += this.cantidad;
-        productoEnCarrito.subtotal = productoEnCarrito.cantidad * productoEnCarrito.pvp;
-        productoEnCarrito.total = productoEnCarrito.gravaIva
-          ? productoEnCarrito.subtotal * (1 + this.iva / 100)
-          : productoEnCarrito.subtotal;
-      } else {
-        const itemCarrito = {
-          ...this.selectedProduct,
-          cantidad: this.cantidad,
-          subtotal: this.cantidad * this.selectedProduct.pvp,
-          total: this.selectedProduct.gravaIva
-            ? this.cantidad * this.selectedProduct.pvp * (1 + this.iva / 100)
-            : this.cantidad * this.selectedProduct.pvp
-        };
-        this.carrito.push(itemCarrito);
-      }
-      this.updateTotalCarrito();
+       
+        const productoEnCarrito = this.carrito.find(item => item.iD_Producto === this.selectedProduct.iD_Producto);
+        if (productoEnCarrito) {
+            // Si el producto ya está en el carrito, actualizamos la cantidad y los valores asociados.
+      
+            productoEnCarrito.cantidad += this.cantidad;
+            productoEnCarrito.subtotal = productoEnCarrito.cantidad * productoEnCarrito.pvp;
+            productoEnCarrito.total = productoEnCarrito.gravaIva
+                ? productoEnCarrito.subtotal * (1 + this.iva / 100)
+                : productoEnCarrito.subtotal;
+        } else {
+            // Si el producto no está en el carrito, lo agregamos.
+            console.log('Producto que no está en carrito a agregar:', this.selectedProduct); // Depuración
+            const itemCarrito = {
+                ...this.selectedProduct,
+                cantidad: this.cantidad,
+                subtotal: this.cantidad * this.selectedProduct.pvp,
+                total: this.selectedProduct.gravaIva
+                    ? this.cantidad * this.selectedProduct.pvp * (1 + this.iva / 100)
+                    : this.cantidad * this.selectedProduct.pvp
+            };
+            this.carrito.push(itemCarrito);
+        }
+        this.updateTotalCarrito();
+        this.calculatePages();
+        console.log('Carrito actualizado:', this.carrito); // Depuración
     }
-  }
+}
+
 
   removeProductFromCart(item: any) {
     const index = this.carrito.indexOf(item);

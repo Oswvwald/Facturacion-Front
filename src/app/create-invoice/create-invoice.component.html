@@ -4,8 +4,8 @@
   <h1>Gestión de Facturas</h1>
   <div class="container">
     <div class="contenedor-flex">
-      <label for="fecha" class="fecha-Factura">Fecha: <b>{{fechaFactura}}</b></label>
-      <label for="fecha" class="fecha-Factura">Factura N°: <b>{{facturaId}}</b></label>
+      <label for="fecha" class="fecha-Factura">Fecha: <b>{{ fechaFactura }}</b></label>
+      <label for="fecha" class="fecha-Factura">Factura N°: <b>{{ facturaId }}</b></label>
     </div>
     <div class="row">
       <div class="column">
@@ -69,75 +69,79 @@
     <!-- Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="productModalLabel">Productos</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="productModalLabel">Productos</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Buscar producto..." [(ngModel)]="productSearch" (input)="filterProducts()" />
+                      <button class="btn btn-outline-secondary" type="button" (click)="filterProducts()">Buscar</button>
+                  </div>
+                  <div class="table-responsive">
+                      <table class="table table-striped table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>Nombre</th>
+                                  <th>Descripción</th>
+                                  <th>Stock</th>
+                                  <th>Precio</th>
+                                  <th>Acciones</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let producto of filteredProductos">
+                                  <td>{{ producto.nombre }}</td>
+                                  <td>{{ producto.descripcion }}</td>
+                                  <td>{{ producto.stockProducto }}</td>
+                                  <td>{{ producto.pvp }}</td>
+                                  <td>
+                                      <button class="btn btn-success" (click)="addProductToCartFromModal(producto)">Agregar al carrito</button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
           </div>
-          <div class="modal-body">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Buscar producto..." [(ngModel)]="productSearch" (input)="filterProducts()">
-              <button class="btn btn-outline-secondary" type="button" (click)="filterProducts()">Buscar</button>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Stock</th>
-                    <th>Precio</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let producto of filteredProductos">
-                    <td>{{ producto.nombre }}</td>
-                    <td>{{ producto.descripcion }}</td>
-                    <td>{{ producto.stockProducto }}</td>
-                    <td>{{ producto.pvp }}</td>
-                    <td><button class="btn btn-success" (click)="addProductToCartFromModal(producto)">Agregar al carrito</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
       </div>
-    </div>
+  </div>
+  
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
         <thead>
-          <tr>
-            <th>Código</th>
-            <th>Producto</th>
-            <th>Descripción</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Subtotal</th>
-            <th>Total</th>
-            <th>Eliminar</th>
-          </tr>
+            <tr>
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+                <th>Total</th>
+                <th>Eliminar</th>
+            </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of paginatedItems">
-            <td>{{ item.codigo }}</td>
-            <td>{{ item.nombre }}</td>
-            <td>{{ item.descripcion }}</td>
-            <td>
-              <input type="number" [(ngModel)]="item.cantidad" (change)="updateProductInCart(item, item.cantidad)" min="1" />
-            </td>
-            <td>{{ item.pvp }}</td>
-            <td>{{ item.subtotal }}</td>
-            <td>{{ item.total }}</td>
-            <td><button (click)="removeProductFromCart(item)" class="btn btn-danger">Eliminar</button></td>
-          </tr>
+            <tr *ngFor="let item of carrito">
+                <td>{{ item.codigo }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.descripcion }}</td>
+                <td>
+                    <input type="number" [(ngModel)]="item.cantidad" (change)="updateProductInCart(item, item.cantidad)" min="1" />
+                </td>
+                <td>{{ item.pvp }}</td>
+                <td>{{ item.subtotal }}</td>
+                <td>{{ item.total }}</td>
+                <td><button (click)="removeProductFromCart(item)" class="btn btn-danger">Eliminar</button></td>
+            </tr>
         </tbody>
-      </table>
+    </table>
+    
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item" [class.disabled]="currentPage === 1">

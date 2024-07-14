@@ -151,7 +151,7 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   updateProductInCart(item: any, newCantidad: number) {
-    const productoEnCarrito = this.carrito.find(producto => producto.id === item.id);
+    const productoEnCarrito = this.carrito.find(producto => producto.iD_Producto === item.iD_Producto);
     if (productoEnCarrito) {
       productoEnCarrito.cantidad = newCantidad;
       productoEnCarrito.subtotal = newCantidad * productoEnCarrito.pvp;

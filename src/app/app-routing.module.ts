@@ -9,7 +9,7 @@ import { CreateInvoiceComponent } from './create-invoice/create-invoice.componen
 import { LoginComponent } from './login/login.component';
 import { TipoPagoViewComponent } from './tipo-pago-view/tipo-pago-view.component';
 import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
-
+import { DetalleFacturaComponent } from './detalle-factura/detalle-factura.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'}, // Redirige la ruta raíz a login
   {path: 'clientes-view', component: ClientesViewComponent},
@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'tipoPago-view', component: TipoPagoViewComponent},
   {path: 'paginaPrincipal', component: PaginaPrincipalComponent},
+  {path:'detalleFactura',component: DetalleFacturaComponent},
   {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
 ];
 

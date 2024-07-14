@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { TipoPagoViewComponent } from './tipo-pago-view/tipo-pago-view.component';
 import { TipoPagoDialogComponent } from './tipo-pago-dialog/tipo-pago-dialog.component';
 import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
+import { DetalleFacturaComponent } from './detalle-factura/detalle-factura.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.co
     TipoPagoViewComponent,
     TipoPagoDialogComponent,
     PaginaPrincipalComponent,
+    DetalleFacturaComponent,
   ],
   imports: [
     BrowserModule,

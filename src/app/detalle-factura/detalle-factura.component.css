@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  .header, .footer {
+    text-align: center;
+    padding: 10px 0;
+  }
+  .invoice-details, .customer-details, .payment-details {
+    margin: 20px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  

@@ -3,34 +3,58 @@
 <div class="container">
     <h1>Gestión de Facturas</h1>
     <button class="botonCrear" (click)="crearFactura()">Crear Factura</button>
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Número de Factura</th>
-            <th>Cliente</th>
-            <th>Tipo de Pago</th>
-            <th>Fecha de Emisión</th>
-            <th>Total</th>
-            <th>Iva aplicado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let factura of facturas">
-            <td>{{factura.factura_id}}</td>
-            <td>{{factura.NombresCliente}}</td>
-            <td>{{factura.tipoPagoNombre}}</td>
-            <td>{{factura.fecha}}</td>
-            <td>{{factura.total}}</td>
-            <td>{{factura.iva}}</td>
-            <td>
-              <!-- <button class="editar" (click)="editFactura(factura)">Editar</button> -->
-              <!-- <button class="eliminar" (click)="deleteFactura(factura.factura_id)">Eliminar</button> -->
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    
+    <!-- Campo de búsqueda -->
+    <div class="input-group mb-3" style="width: 200px; float: right;">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="buscarTexto" (input)="filtrarFacturas()">
     </div>
-  </div>
-  
+
+    <div class="table-responsive-xl">
+        <table class="table table-sm">
+            <caption>Lista de facturas</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Número de Factura</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Tipo de Pago</th>
+                    <th scope="col">Fecha de Emisión</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Iva aplicado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let factura of facturasMostradas">
+                    <td scope="row">{{factura.factura_id}}</td>
+                    <td>{{factura.NombresCliente}}</td>
+                    <td>{{factura.tipoPagoNombre}}</td>
+                    <td>{{factura.fecha}}</td>
+                    <td>{{factura.total}}</td>
+                    <td>{{factura.iva}}</td>
+                    <td>
+                        <!-- <button class="editar" (click)="editFactura(factura)">Editar</button> -->
+                        <!-- <button class="eliminar" (click)="deleteFactura(factura.factura_id)">Eliminar</button> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Proceso de paginación -->
+        <div class="d-flex justify-content-between align-items-center">
+            <span>Mostrando {{(paginaActual - 1) * facturasPorPagina + 1}} a {{paginaActual * facturasPorPagina > facturasFiltradas.length ? facturasFiltradas.length : paginaActual * facturasPorPagina}} de {{facturasFiltradas.length}} facturas</span>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mb-0">
+                    <li class="page-item" [class.disabled]="paginaActual === 1">
+                        <a class="page-link" href="#" (click)="cambiarPagina(paginaActual - 1, $event)">Previa</a>
+                    </li>
+                    <li class="page-item" [class.active]="paginaActual === n" *ngFor="let n of getNumeroPaginas()">
+                        <a class="page-link" href="#" (click)="cambiarPagina(n, $event)">{{n}}</a>
+                    </li>
+                    <li class="page-item" [class.disabled]="paginaActual === getNumeroPaginas().length">
+                        <a class="page-link" href="#" (click)="cambiarPagina(paginaActual + 1, $event)">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

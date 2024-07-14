@@ -11,6 +11,14 @@ import { ClientDialogComponent } from '../client-dialog/client-dialog.component'
 export class ClientesViewComponent implements OnInit {
 
   clientes: Array<any> = [];
+  clientesFiltrados: Array<any> = [];
+  buscarTexto: string = '';
+
+  // Paginación Clientes
+  clientesPorPagina: number = 2;
+  paginaActual: number = 1;
+  clientesMostrados: any[] = [];
+
   tipoPago: Array<any> = [];
 
   constructor(
@@ -19,7 +27,43 @@ export class ClientesViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getTipoPago(); // Asegúrate de obtener los tipos de pago primero
+    this.getTipoPago();
+  }
+
+  // Filtrar clientes según el texto de búsqueda
+  filtrarClientes() {
+    this.clientesFiltrados = this.clientes.filter(cliente =>
+      cliente.nombres.toLowerCase().includes(this.buscarTexto.toLowerCase()) ||
+      cliente.cedula.toLowerCase().includes(this.buscarTexto.toLowerCase()) ||
+      cliente.apellidos.toLowerCase().includes(this.buscarTexto.toLowerCase())
+    );
+    this.actualizarClientesMostrados();
+  }
+
+  // Paginación de los clientes
+  actualizarClientesMostrados() {
+    const inicio = (this.paginaActual - 1) * this.clientesPorPagina;
+    const fin = inicio + this.clientesPorPagina;
+    this.clientesMostrados = this.clientesFiltrados.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number, event: any) {
+    event.preventDefault(); // Evitar la navegación por defecto
+    this.paginaActual = nuevaPagina;
+    this.actualizarClientesMostrados();
+  }
+
+  getNumeroPaginas(): number[] {
+    return Array(Math.ceil(this.clientesFiltrados.length / this.clientesPorPagina)).fill(0).map((x, i) => i + 1);
+  }
+
+  getTipoPago() {
+    this.api.getTipoPago().subscribe((res: any) => {
+      this.tipoPago = res.tipoPago;
+      this.getClientes();
+    }, (error: any) => {
+      console.log(error);
+    });
   }
 
   getClientes() {
@@ -31,15 +75,7 @@ export class ClientesViewComponent implements OnInit {
           tipoPagoNombre: tipoPago ? tipoPago.tipo : 'N/A'
         };
       });
-    });
-  }
-
-  getTipoPago() {
-    this.api.getTipoPago().subscribe((res: any) => {
-      this.tipoPago = res.tipoPago;
-      this.getClientes(); // Obtener clientes después de cargar los tipos de pago
-    }, (error: any) => {
-      console.log(error);
+      this.filtrarClientes();
     });
   }
 

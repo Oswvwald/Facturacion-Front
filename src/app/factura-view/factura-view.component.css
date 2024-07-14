@@ -24,7 +24,7 @@ body {
 /* Título */
 h1 {
     margin-bottom: 30px;
-    color: #333;
+    color: #000000;
     font-size: 35px;
     text-align: center; /* Alinear a la izquierda */
 }
@@ -62,18 +62,18 @@ h1 {
 .table th,
 .table td {
     padding: 10px;
-    border-bottom: 1px solid #61616137;
+    border-bottom: 1px solid #21212137;
 }
 
 .table th {
     background-color: #1e2460;
-    font-weight: bold;
     color: #fcfcfc;
+    font-weight: normal; /* Cambiar a normal para eliminar la negrita */
 }
 
 .table td {
     background-color: #ffffff; /* Color de fondo blanco */
-    color: #333;
+    color: #000000;
 }
 
 /* Estilo alternativo para filas */
@@ -93,3 +93,24 @@ h1 {
     }
 }
 
+
+/* Estilos para el campo de búsqueda */
+.input-group {
+    margin-bottom: 20px;
+    width: 200px; /* Asegurarse de que el campo sea pequeño */
+    float: right;
+}
+
+/* Estilos para la paginación */
+.pagination .page-item .page-link {
+    color: #007BFF;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+}

@@ -20,6 +20,7 @@ const routes: Routes = [
   {path: 'tipoPago-view', component: TipoPagoViewComponent},
   {path: 'paginaPrincipal', component: PaginaPrincipalComponent},
   {path:'detalleFactura',component: DetalleFacturaComponent},
+  {path: 'homePage', component: PaginaPrincipalComponent},
   {path: '**', redirectTo: '/login'} // Redirige cualquier ruta no reconocida a login
 ];
 

@@ -31,4 +31,88 @@ body {
   th {
     background-color: #f2f2f2;
   }
+
+  /* Estilo general para el contenedor */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilo para el título principal */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilo para la información de la factura */
+.factura-info {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.factura-info label {
+  display: inline-block;
+  width: 150px;
+  font-weight: bold;
+}
+
+/* Estilo para el título de productos */
+h2 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+/* Estilo para la tabla de productos */
+.table-responsive {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Estilo para el botón de imprimir */
+button.btn.btn-primary {
+  display: block;
+  width: 200px;
+  margin: 0 auto;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+button.btn.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para el mensaje de carga */
+p {
+  text-align: center;
+  font-size: 1.2em;
+  color: #888;
+}
+
   

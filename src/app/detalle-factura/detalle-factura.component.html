@@ -1,51 +1,48 @@
 <app-sidebar></app-sidebar>
- 
 
-    <div class="container">
-        <div class="header">
-            <h1>Factura</h1>
+<div class="container">
+    <h1>Detalle de Factura</h1>
+    <div *ngIf="facturaDetalles">
+        <div class="factura-info">
+            <label><strong>Factura N°:</strong></label> {{ facturaDetalles.factura_id }}<br>
+            <label><strong>Cliente:</strong></label> {{ facturaDetalles.clienteNombre }}<br>
+            <label><strong>Fecha de Emisión:</strong></label> {{ facturaDetalles.fecha }}<br>
+            <label><strong>Tipo de Pago:</strong></label> {{ facturaDetalles.tipoPagoNombre }}<br>
+            <label><strong>IVA Aplicado:</strong></label> {{ facturaDetalles.iva }}<br>
+            <label><strong>Total:</strong></label> {{ facturaDetalles.total }}<br>
         </div>
-        <div *ngFor="let factura of facturas">
-            <p><strong>Factura ID:</strong> {{factura.factura_id}}</p>
-            <p><strong>Fecha:</strong> {{factura.fecha}}</p>
-            <hr> <!-- Línea horizontal para separar las facturas -->
-          </div>
-        <div class="customer-details">
-            <p *ngFor="let cliente of clientes"><strong>Cédula Cliente:</strong> {{cliente.cedula}}</p>
+
+        <h2>Productos</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of facturaDetalles.detalle">
+                        <td>{{ item.producto_id }}</td>
+                        <td>{{ item.nombreProducto }}</td>
+                        <td>{{ item.descripcion }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>{{ item.precio_unitario }}</td>
+                        <td>{{ item.subtotal }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="payment-details">
-            <p><strong>Tipo de Pago:</strong> efectivo</p>
-            <h2><strong>Detalles</strong></h2>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Producto ID</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Incluye IVA</th>
-                    <th>Porcentaje IVA</th>
-                    <th>Subtotal</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                 
-                <tr *ngFor="let factura of facturas">
-                <td>{{factura.factura_id}}</td>
-                <td>{{factura.NombresCliente}}</td>
-                <td>{{factura.tipoPagoNombre}}</td>
-                <td>{{factura.fecha}}</td>
-                <td>{{factura.total}}</td>
-                <td>{{factura.iva}}</td>
-                    
-                </tr>
-               
-            </tbody>
-        </table>
-        <div class="footer">
-            <p><strong>Total:</strong> xsxsx</p>
-            <p><strong>IVA:</strong>"dsc</p>
-        </div>
+
+        <button class="btn btn-primary" (click)="imprimirFactura()">Imprimir Factura</button>
     </div>
-
+    <div *ngIf="!facturaDetalles">
+        <p>Cargando detalles de la factura...</p>
+    </div>
+</div>

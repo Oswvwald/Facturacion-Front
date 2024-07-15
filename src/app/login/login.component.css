@@ -105,3 +105,8 @@ h1 {
         width: 80px;
     }
 }
+
+.error-message {
+    color: red;
+    /* Otros estilos como margen, padding, etc. */
+  }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importamos ReactiveFormsModule
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; // Importamos MatAutocompleteModule
 import { MatInputModule } from '@angular/material/input'; // Importamos MatInputModule
@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { TipoPagoViewComponent } from './tipo-pago-view/tipo-pago-view.component';
 import { TipoPagoDialogComponent } from './tipo-pago-dialog/tipo-pago-dialog.component';
 import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
+import { AuthInterceptor } from './auth.interceptor'; // Importamos el interceptor
 
 @NgModule({
   declarations: [
@@ -45,7 +46,9 @@ import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.co
     MatInputModule, // Añadimos MatInputModule
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } // Registramos el interceptor
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,9 +9,9 @@ import { tap, catchError, retry  } from 'rxjs/operators';
 })
 export class ApiFacturacionService {
 
-  url: string = 'http://127.0.0.1:3000/';
+  url: string = 'http://45.70.13.48:3000/';
   private baseUrl = '/api'; // Utiliza el proxy configurado
-  // private apiUrl = 'https://api-modulo-seguridad.onrender.com/api';
+  private loginApi = 'https://api-modulo-seguridad.onrender.com/api/';
   private functionalities: string[] = [];
 
   constructor(private api: HttpClient, private http: HttpClient, private Http: HttpClient) { }
@@ -107,38 +107,26 @@ export class ApiFacturacionService {
   //
   //Iniciar sesión
   login(username: string, password: string, moduleName: string): Observable<any> {
-    return this.Http.post<any>('https://api-modulo-seguridad.onrender.com/api/login_module', {
+    return this.http.post<any>(this.loginApi + 'login_module', {
       usr_user: username,
       usr_password: password,
       mod_name: moduleName
     }).pipe(
-      retryWhen(errors =>
-        errors.pipe(
-          scan((acc, error) => {
-            if (acc < 1) {
-              return acc + 1;
-            } else {
-              throw error;
-            }
-          }, 0),
-          delay(500) // Incrementa este valor exponencialmente si es necesario
-        )
-      ),
       tap(response => {
         localStorage.setItem('access_token', response.access_token);
         localStorage.setItem('functionalities', JSON.stringify(response.functionalities));
         this.functionalities = response.functionalities;
       }),
       catchError(error => {
-        // Manejo de errores
-        if (error.status === 401) {
-          return throwError("Error de autenticación. Por favor, intente de nuevo.");
-        } else {
-          return throwError("Ocurrió un error al intentar iniciar sesión. Por favor, intente de nuevo más tarde.");
-        }
+        const errorMsg = error.status === 401
+          ? "Error de autenticación. Por favor, intente de nuevo."
+          : "Ocurrió un error al intentar iniciar sesión. Por favor, intente de nuevo más tarde.";
+        // Aquí puedes manejar el error sin imprimir en la consola, por ejemplo, asignando el mensaje de error a una variable que luego se puede mostrar en la UI.
+        return throwError(errorMsg);
       })
     );
   }
+
 
   getFunctionalities(): string[] {
     if (this.functionalities.length === 0) {

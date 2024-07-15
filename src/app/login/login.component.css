@@ -19,28 +19,27 @@ body {
 }
 
 .login-container {
-    background-color: rgba(255, 255, 255, 5); /* Blanco con 90% de opacidad */
+    background-color: rgba(255, 255, 255, 5);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.5); /* Sombra con desenfoque */
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.5);
     text-align: center;
     width: 100%;
     max-width: 400px;
 }
 
-
 .logo img {
-    width: 100px; /* Ajusta el tamaño del contenedor según necesites */
-    height: 100px; /* Ajusta el tamaño del contenedor según necesites */
+    width: 100px;
+    height: 100px;
     margin-bottom: 20px;
     background-color: black;
-    border-radius: 50%; /* Ajustado a 50% para un círculo perfecto */
-    padding: 15px; /* Agrega espacio interno (padding) */
+    border-radius: 50%;
+    padding: 15px;
 }
 
 h1 {
     margin-bottom: 20px;
-    color: #000000; /* Negro */
+    color: #000000;
 }
 
 .input-group {
@@ -51,7 +50,7 @@ h1 {
 .input-group label {
     display: block;
     margin-bottom: 5px;
-    color: #000000; /* Negro */
+    color: #000000;
 }
 
 .input-container {
@@ -63,7 +62,7 @@ h1 {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #1e2460; /* Verde */
+    color: #1e2460;
 }
 
 .input-group input {
@@ -73,7 +72,7 @@ h1 {
     border-radius: 5px;
     outline: none;
     transition: border-color 0.3s;
-    color: #000000; /* Negro */
+    color: #000000;
 }
 
 .input-group input:focus {
@@ -82,7 +81,7 @@ h1 {
 
 .login-button {
     background-color: #1e2460;
-    color: #ffffff; /* Blanco */
+    color: #ffffff;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -92,10 +91,9 @@ h1 {
 }
 
 .login-button:hover {
-    background-color: #2c38c5; /* Verde más oscuro al hacer hover */
+    background-color: #2c38c5;
 }
 
-/* Responsive */
 @media (max-width: 480px) {
     .login-container {
         padding: 15px;
@@ -108,5 +106,4 @@ h1 {
 
 .error-message {
     color: red;
-    /* Otros estilos como margen, padding, etc. */
-  }
+}

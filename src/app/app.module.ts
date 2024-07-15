@@ -20,6 +20,7 @@ import { TipoPagoViewComponent } from './tipo-pago-view/tipo-pago-view.component
 import { TipoPagoDialogComponent } from './tipo-pago-dialog/tipo-pago-dialog.component';
 import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
 import { AuthInterceptor } from './auth.interceptor'; // Importamos el interceptor
+import { DetalleFacturaComponent } from './detalle-factura/detalle-factura.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AuthInterceptor } from './auth.interceptor'; // Importamos el intercept
     TipoPagoViewComponent,
     TipoPagoDialogComponent,
     PaginaPrincipalComponent,
+    DetalleFacturaComponent,
   ],
   imports: [
     BrowserModule,

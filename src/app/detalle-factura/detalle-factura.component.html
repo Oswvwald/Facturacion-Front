@@ -1,0 +1,51 @@
+<app-sidebar></app-sidebar>
+ 
+
+    <div class="container">
+        <div class="header">
+            <h1>Factura</h1>
+        </div>
+        <div *ngFor="let factura of facturas">
+            <p><strong>Factura ID:</strong> {{factura.factura_id}}</p>
+            <p><strong>Fecha:</strong> {{factura.fecha}}</p>
+            <hr> <!-- Línea horizontal para separar las facturas -->
+          </div>
+        <div class="customer-details">
+            <p *ngFor="let cliente of clientes"><strong>Cédula Cliente:</strong> {{cliente.cedula}}</p>
+        </div>
+        <div class="payment-details">
+            <p><strong>Tipo de Pago:</strong> efectivo</p>
+            <h2><strong>Detalles</strong></h2>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto ID</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Incluye IVA</th>
+                    <th>Porcentaje IVA</th>
+                    <th>Subtotal</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                 
+                <tr *ngFor="let factura of facturas">
+                <td>{{factura.factura_id}}</td>
+                <td>{{factura.NombresCliente}}</td>
+                <td>{{factura.tipoPagoNombre}}</td>
+                <td>{{factura.fecha}}</td>
+                <td>{{factura.total}}</td>
+                <td>{{factura.iva}}</td>
+                    
+                </tr>
+               
+            </tbody>
+        </table>
+        <div class="footer">
+            <p><strong>Total:</strong> xsxsx</p>
+            <p><strong>IVA:</strong>"dsc</p>
+        </div>
+    </div>
+

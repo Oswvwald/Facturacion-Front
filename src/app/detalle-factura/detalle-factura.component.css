@@ -1,42 +1,17 @@
+/* Estilo general para el cuerpo del documento */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  .container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-  }
-  .header, .footer {
-    text-align: center;
-    padding: 10px 0;
-  }
-  .invoice-details, .customer-details, .payment-details {
-    margin: 20px 0;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  table, th, td {
-    border: 1px solid #ddd;
-  }
-  th, td {
-    padding: 10px;
-    text-align: left;
-  }
-  th {
-    background-color: #f2f2f2;
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-  /* Estilo general para el contenedor */
+/* Estilo general para el contenedor */
 .container {
   max-width: 900px;
+  width: 80%;
   margin: 0 auto;
   padding: 20px;
+  border: 1px solid #ccc;
 }
 
 /* Estilo para el título principal */
@@ -58,6 +33,12 @@ h1 {
   display: inline-block;
   width: 150px;
   font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Estilo para las secciones de detalles */
+.invoice-details, .customer-details, .payment-details {
+  margin: 20px 0;
 }
 
 /* Estilo para el título de productos */
@@ -77,13 +58,16 @@ table {
   margin-bottom: 20px;
 }
 
-table th, table td {
+table, th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+}
+
+th, td {
+  padding: 10px;
   text-align: center;
 }
 
-table th {
+th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
@@ -92,7 +76,7 @@ table th {
 button.btn.btn-primary {
   display: block;
   width: 200px;
-  margin: 0 auto;
+  margin: 0 auto 20px auto; /* Alineado al centro con margen inferior */
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -115,4 +99,35 @@ p {
   color: #888;
 }
 
-  
+/* Estilos específicos para la impresión */
+@media print {
+  /* Ocultar el menú lateral y el botón de imprimir */
+  app-sidebar,
+  button.btn.btn-primary {
+      display: none;
+  }
+
+  /* Ajustar el contenedor para impresión */
+  .container {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+      border: none;
+  }
+
+  /* Ajustar márgenes y paddings para la impresión */
+  .factura-info, .table-responsive {
+      border: none;
+      padding: 0;
+  }
+
+  /* Eliminar bordes de la tabla para la impresión */
+  table, th, td {
+      border: 1px solid #000;
+  }
+
+  /* Ocultar cualquier otro elemento no deseado */
+  .no-print {
+      display: none;
+  }
+}

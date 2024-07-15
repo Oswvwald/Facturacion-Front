@@ -1,64 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ApiFacturacionService } from '../services/api-facturacion.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalle-factura',
   templateUrl: './detalle-factura.component.html',
   styleUrls: ['./detalle-factura.component.css']
 })
-export class DetalleFacturaComponent {
-  
-  facturas: Array<any> = [];
-  tipoPago: Array<any> = [];
-  clientes: Array<any> = [];
+export class DetalleFacturaComponent implements OnInit {
+  facturaId: string;
+  facturaDetalles: any;
 
-  constructor(private api: ApiFacturacionService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private api: ApiFacturacionService) { }
 
   ngOnInit(): void {
-    this.getTipoPago();
+    // Asigna un valor por defecto si el id es null
+    this.facturaId = this.route.snapshot.paramMap.get('id') ?? '';
+    this.obtenerDetallesFactura();
   }
 
-  
-
-  crearFactura(){
-    this.router.navigate(['/create-invoice']);
-  }
-
-  getTipoPago() {
-    this.api.getTipoPago().subscribe((res: any) => {
-      this.tipoPago = res.tipoPago;
-      this.getClientes();
+  obtenerDetallesFactura() {
+    this.api.getFacturaById(this.facturaId).subscribe((data: any) => {
+      this.facturaDetalles = data.factura;
+      console.log('Detalles de la factura:', this.facturaDetalles); // Depuración
+      // Procesar los detalles de la factura según sea necesario
     }, (error: any) => {
-      console.log(error);
+      console.error('Error al obtener detalles de la factura', error);
     });
   }
 
-  getClientes() {
-    this.api.getClients().subscribe((res: any) => {
-      this.clientes = res.clientes;
-      this.getFacturas();
-    }, (error: any) => {
-      console.log(error);
-    });
-  }
-
-  getFacturas() {
-    this.api.getFacturas().subscribe((data: any) => {
-      this.facturas = data.facturas.map((factura: any) => {
-        const tipoPago = this.tipoPago.find(tp => tp.tipo_code === factura.tipo_pago);
-        const NombresCliente = this.clientes.find(c => c.cedula === factura.cedula_cliente);
-        return {
-          ...factura,
-          tipoPagoNombre: tipoPago ? tipoPago.tipo : 'N/A',
-          NombresCliente: NombresCliente ? `${NombresCliente.nombres} ${NombresCliente.apellidos}` : 'N/A'
-        };
-      });
-    }, (error: any) => {
-      console.log(error);
-    });
+  imprimirFactura() {
+    window.print();
   }
 }
-
-
-

@@ -22,6 +22,8 @@ import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.co
 import { AuthInterceptor } from './auth.interceptor'; // Importamos el interceptor
 import { DetalleFacturaComponent } from './detalle-factura/detalle-factura.component';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +51,8 @@ import { DetalleFacturaComponent } from './detalle-factura/detalle-factura.compo
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } // Registramos el interceptor
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, // Registramos el interceptor
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

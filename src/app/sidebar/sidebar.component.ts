@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ApiFacturacionService } from '../services/api-facturacion.service'; // Ajusta la ruta según sea necesario
+import { Component, OnInit } from '@angular/core';
+import { ApiFacturacionService } from '../services/api-facturacion.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,11 +7,16 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   dropdownDisplay = 'none';
   sidebarExpanded = false;
+  functionalities: string[] = [];
 
-  constructor(private apiFacturacionService: ApiFacturacionService, private router: Router) { }
+  constructor(private apiFacturacionService: ApiFacturacionService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.functionalities = this.apiFacturacionService.getFunctionalities();
+  }
 
   toggleDropdown(event: MouseEvent): void {
     event.preventDefault();
@@ -20,6 +25,10 @@ export class SidebarComponent {
 
   toggleSidebar(): void {
     this.sidebarExpanded = !this.sidebarExpanded;
+  }
+
+  hasFunctionality(expectedFunctionality: string): boolean {
+    return this.functionalities.includes(expectedFunctionality);
   }
 
   logout(): void {

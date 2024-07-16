@@ -18,12 +18,32 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  navigateToView() {
+  navigateToViewClients() {
     this.router.navigate(['/clientes-view']);
+  }
+
+  navigateToViewInvoices() {
+    this.router.navigate(['/facturas-view']);
+  }
+
+  navigateToViewPaymentType() {
+    this.router.navigate(['/tipoPago-view']);
   }
 
   navigateToHome() {
     this.router.navigate(['/homePage']);
+  }
+
+  navigateToView(functionalities: string[]) {
+    if (functionalities.includes('FACT-CLIEN')) {
+      this.navigateToViewClients();
+    } else if (functionalities.includes('FACT-FTURA')) {
+      this.navigateToViewInvoices();
+    } else if (functionalities.includes('FACT-TPAGO')) {
+      this.navigateToViewPaymentType();
+    } else {
+      this.navigateToHome();
+    }
   }
 
   login(loginForm: NgForm) {
@@ -33,7 +53,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.apiService.login(this.username, this.password, this.moduleName).subscribe({
-      next: () => this.navigateToView(),
+      next: () => {
+        const functionalities = this.apiService.getFunctionalities();
+        this.navigateToView(functionalities);
+      },
       error: (errorMessage) => this.errorMessage = errorMessage
     });
   }

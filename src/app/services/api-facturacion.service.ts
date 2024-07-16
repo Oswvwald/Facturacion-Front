@@ -12,9 +12,23 @@ export class ApiFacturacionService {
   url: string = 'http://45.70.13.48:3000/';
   private baseUrl = '/api'; // Utiliza el proxy configurado
   private loginApi = 'https://api-modulo-seguridad.onrender.com/api/';
+  private auditApi = 'https://api-modulo-seguridad.onrender.com/api/auditoria'; 
   private functionalities: string[] = [];
+  private userloged : string;
 
-  constructor(private api: HttpClient, private http: HttpClient, private Http: HttpClient) { }
+  constructor(private api: HttpClient, private http: HttpClient) { }
+
+  //Auditoria
+  private sendAudit(aud_usuario: string, aud_accion: string, aud_modulo: string, aud_funcionalidad: string, aud_observacion: string): Observable<any> {
+    const auditData = { aud_usuario, aud_accion, aud_modulo, aud_funcionalidad, aud_observacion };
+    return this.http.post(this.auditApi, auditData).pipe(
+      catchError(error => {
+        console.error('Error enviando auditoría:', error);
+        return throwError('Error enviando auditoría.');
+      })
+    );
+  }
+  
 
   //Clientes
   //
@@ -30,17 +44,41 @@ export class ApiFacturacionService {
 
   //Crear un cliente
   createClient(cliente: any): Observable<any> {
-    return this.api.post(this.url + 'clientes', cliente);
+    return this.api.post(this.url + 'clientes', cliente).pipe(
+      tap(() => {
+        this.sendAudit(this.userloged, 'create', 'Facturación', 'clientes', 'Creación de cliente').subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit(this.userloged, 'create', 'Facturación', 'clientes', `Error: ${error.message}`).subscribe();
+        return throwError(error);
+      })
+    );
   }
 
   //Editar un cliente
   editClient(cedula: string, cliente: any): Observable<any> {
-    return this.api.put(this.url + 'clientes/' + cedula, cliente);
+    return this.api.put(this.url + 'clientes/' + cedula, cliente).pipe(
+      tap(() => {
+        this.sendAudit(this.userloged, 'edit', 'Facturación', 'clientes', `Edición de cliente con cédula: ${cedula}`).subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit(this.userloged, 'edit', 'Facturación', 'clientes', `Error: ${error.message}`).subscribe();
+        return throwError(error);
+      })
+    );
   }
 
   //Eliminar un cliente
   deleteClient(cedula: string): Observable<any> {
-    return this.api.delete(this.url + 'clientes/' + cedula);
+    return this.api.delete(this.url + 'clientes/' + cedula).pipe(
+      tap(() => {
+        this.sendAudit(this.userloged, 'delete', 'Facturación', 'clientes', `Eliminación de cliente con cédula: ${cedula}`).subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit(this.userloged, 'delete', 'Facturación', 'clientes', `Error: ${error.message}`).subscribe();
+        return throwError(error);
+      })
+    );
   }
 
   //Tipo de pago
@@ -113,15 +151,28 @@ export class ApiFacturacionService {
       mod_name: moduleName
     }).pipe(
       tap(response => {
+        // Verifica si el rol es uno de los permitidos
+        const allowedRoles = ['FAC-ADMIN', 'FAC-FACTURADOR'];
+        const userRole = response.Role;
+        const hasAllowedRole = userRole.some((role: string) => allowedRoles.includes(role));
+  
+        if (!hasAllowedRole) {
+          // Si el usuario no tiene un rol permitido, lanza un error
+          throw new Error('Rol no permitido. Acceso denegado.');
+        }
+        
+        this.userloged = username;
+        // Si el rol es permitido, guarda el token y las funcionalidades
         localStorage.setItem('access_token', response.access_token);
         localStorage.setItem('functionalities', JSON.stringify(response.functionalities));
+        localStorage.setItem('role', JSON.stringify(response.Role));
         this.functionalities = response.functionalities;
       }),
       catchError(error => {
+        // Maneja errores de autenticación y otros errores
         const errorMsg = error.status === 401
           ? "Error de autenticación. Por favor, intente de nuevo."
           : "Ocurrió un error al intentar iniciar sesión. Por favor, intente de nuevo más tarde.";
-        // Aquí puedes manejar el error sin imprimir en la consola, por ejemplo, asignando el mensaje de error a una variable que luego se puede mostrar en la UI.
         return throwError(errorMsg);
       })
     );

@@ -13,6 +13,7 @@ import { DetalleFacturaComponent } from './detalle-factura/detalle-factura.compo
 
 // Guards
 import { AuthGuard } from './auth.guard';
+import { LoginGuard } from './login.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,10 +22,10 @@ const routes: Routes = [
   { path: 'facturas-view', component: FacturaViewComponent, canActivate: [AuthGuard], data: { expectedFunctionality: 'FACT-FTURA' }},
   { path: 'create-invoice', component: CreateInvoiceComponent, canActivate: [AuthGuard], data: { expectedFunctionality: 'FACT-FTURA' }},
   { path: 'detalle-factura/:id', component: DetalleFacturaComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'tipoPago-view', component: TipoPagoViewComponent, canActivate: [AuthGuard], data: { expectedFunctionality: 'FACT-TPAGO' }},
   { path: 'homePage', component: PaginaPrincipalComponent },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/homePage' }
 ];
 
 @NgModule({

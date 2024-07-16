@@ -20,7 +20,7 @@
     </div>
 
     <div class="customer-details">
-        <h2>{{ facturaDetalles.clienteNombre }}</h2>
+        <h2>{{ facturaDetalles.cedula_cliente }}</h2>
         <p>{{ facturaDetalles.clienteDireccion }}</p>
         <p>{{ facturaDetalles.clienteTelefono }}</p>
         <p>{{ facturaDetalles.clienteEmail }}</p>
@@ -28,7 +28,7 @@
 
     <div class="payment-details">
         <h3>Método de Pago</h3>
-        <p><strong>Cuenta:</strong> 4916 8418 9082 4339</p>
+        <label><strong>Tipo de pago:</strong></label> {{ facturaDetalles.factura_id }}
         <p><strong>Correo:</strong> hola@sitioincreible.mx</p>
     </div>
 

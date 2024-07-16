@@ -10,6 +10,7 @@ import { ApiFacturacionService } from '../services/api-facturacion.service';
 export class DetalleFacturaComponent implements OnInit {
   facturaId: string;
   facturaDetalles: any = { detalle: [] }; // Inicializa facturaDetalles con un objeto vacío
+  clienteDetalles: any = { detalle: [] }; // Inicializa clienteDetalles con un objeto vacío
 
   constructor(private route: ActivatedRoute, private api: ApiFacturacionService, private router: Router) { }
 
@@ -32,9 +33,19 @@ export class DetalleFacturaComponent implements OnInit {
     this.api.getFacturaById(this.facturaId).subscribe((data: any) => {
       this.facturaDetalles = data.factura;
       console.log('Detalles de la factura:', this.facturaDetalles); // Depuración
-      // Procesar los detalles de la factura según sea necesario
+      this.obtenerClienteDetalles(this.facturaDetalles.cedulaCliente);
     }, (error: any) => {
       console.error('Error al obtener detalles de la factura', error);
+    });
+  }
+
+  obtenerClienteDetalles(cedula: string) {
+    this.api.getClientByCedula(this.facturaDetalles.cedula_cliente).subscribe((data: any) => {
+      this.clienteDetalles = data.cliente;
+      console.log('Detalles del cliente:', this.clienteDetalles); // Depuración
+    
+    }, (error: any) => {
+      console.error('Error al obtener detalles del cliente', error);
     });
   }
 

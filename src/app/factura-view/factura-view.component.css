@@ -20,6 +20,30 @@ body {
     flex-direction: column;
     gap: 20px;
 }
+button.editar {
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Relleno */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+button.editar:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+button.editar:active {
+    background-color: #00408d; /* Color de fondo al hacer clic */
+}
+
+button.editar:focus {
+    outline: none; /* Sin borde de enfoque */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Sombra al enfocar */
+}
+
 
 /* Título */
 h1 {

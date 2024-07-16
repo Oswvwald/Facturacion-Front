@@ -222,6 +222,62 @@ export class ApiFacturacionService {
     );
   }
 
+  //obtener una factura por id
+  getFactura(id: string): Observable<any> {
+    return this.api.get(this.url + 'facturas/' + id);
+  }
+
+  //editar una factura
+  editFactura(id: string, factura: any): Observable<any> {
+    this.userloged = this.userLogged;
+    return this.api.put(this.url + 'facturas/' + id, factura).pipe(
+      tap(() => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'edit',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'facturas',
+          aud_observacion: `Edición de factura con ID: ${id}`
+        }).subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'edit',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'facturas',
+          aud_observacion: `Error: ${error.message}`
+        }).subscribe();
+        return throwError(error);
+      })
+    );
+  }
+
+  //eliminar una factura
+  deleteFactura(id: string): Observable<any> {
+    this.userloged = this.userLogged;
+    return this.api.delete(this.url + 'facturas/' + id).pipe(
+      tap(() => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'delete',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'facturas',
+          aud_observacion: `Eliminación de factura con ID: ${id}`
+        }).subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'delete',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'facturas',
+          aud_observacion: `Error: ${error.message}`
+        }).subscribe();
+        return throwError(error);
+      })
+    );
+  }
 
   //agregar el detalle de la factura
   createDetalleFactura(detalleFactura: any): Observable<any> {
@@ -235,6 +291,89 @@ export class ApiFacturacionService {
           aud_funcionalidad: 'detalle_factura',
           aud_observacion: `Creación de detalle de factura con ID: ${detalleFactura.detalle_factura_id}`
         }).subscribe();
+      })
+    );
+  }
+
+  //ver detalles por id 
+  getDetalleFacturaById(id: string): Observable<any> {
+    return this.api.get(this.url + 'detalle_factura/' + id);
+  }
+
+  //editar detalle de factura
+  editDetalleFactura(id: string, detalleFactura: any): Observable<any> {
+    this.userloged = this.userLogged;
+    return this.api.put(this.url + 'detalle_factura/' + id, detalleFactura).pipe(
+      tap(() => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'edit',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'detalle_factura',
+          aud_observacion: `Edición de detalle de factura con ID: ${id}`
+        }).subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'edit',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'detalle_factura',
+          aud_observacion: `Error: ${error.message}`
+        }).subscribe();
+        return throwError(error);
+      })
+    );
+  }
+
+  //eliminar detalle de factura
+  deleteDetalleFactura(id: string): Observable<any> {
+    this.userloged = this.userLogged;
+    return this.api.delete(this.url + 'detalle_factura/' + id).pipe(
+      tap(() => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'delete',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'detalle_factura',
+          aud_observacion: `Eliminación de detalle de factura con ID: ${id}`
+        }).subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'delete',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'detalle_factura',
+          aud_observacion: `Error: ${error.message}`
+        }).subscribe();
+        return throwError(error);
+      })
+    );
+  }
+
+  //eliminar detalles por facturas 
+  deleteDetallesFacturaPorFacturaId(facturaId: string): Observable<any> {
+    this.userloged = this.userLogged;
+    return this.api.delete(this.url + 'detalle_factura/factura/' + facturaId).pipe(
+      tap(() => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'delete',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'detalle_factura',
+          aud_observacion: `Eliminación de detalles de factura con ID de factura: ${facturaId}`
+        }).subscribe();
+      }),
+      catchError(error => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'delete',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'detalle_factura',
+          aud_observacion: `Error: ${error.message}`
+        }).subscribe();
+        return throwError(error);
       })
     );
   }

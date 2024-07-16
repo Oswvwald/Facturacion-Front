@@ -23,6 +23,33 @@ export class ApiFacturacionService {
 
   constructor(private api: HttpClient, private http: HttpClient) { }
 
+  //cargar las apis antes de llamarlas 
+  chargeApis(retryCount = 0): Observable<any> {
+    return this.http.get(this.baseUrl).pipe(
+      catchError((error) => {
+        if (retryCount < 3) { // Limita a 3 reintentos
+          console.log(`Reintento ${retryCount + 1}`);
+          return this.chargeApis(retryCount + 1); // Reintenta
+        }
+        return throwError(error); // Lanza el error después de 3 intentos
+      })
+    );
+  } 
+
+  chargeApis2(retryCount = 0): Observable<any> {
+    return this.http.get(this.url).pipe(
+      catchError((error) => {
+        if (retryCount < 3) { // Limita a 3 reintentos
+          console.log(`Reintento ${retryCount + 1}`);
+          return this.chargeApis2(retryCount + 1); // Reintenta
+        }
+        return throwError(error); // Lanza el error después de 3 intentos
+      })
+    );
+  }
+
+  
+
   //Auditoria
   private sendAudit(auditoriaData: {
     aud_usuario: string,

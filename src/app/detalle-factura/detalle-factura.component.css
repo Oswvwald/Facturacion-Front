@@ -5,6 +5,20 @@ body {
   padding: 0;
 }
 
+/* Estilo para las acciones */
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 10px;
+ 
+}
+
+.actions .btn {
+  display: inline-block;
+  margin: 0 10px;
+}
+
 /* Estilo general para el contenedor */
 .container {
   max-width: 900px;
@@ -14,37 +28,70 @@ body {
   border: 1px solid #ccc;
 }
 
-/* Estilo para el título principal */
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
+/* Estilo para el encabezado */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.header .logo {
+  max-height: 100px;
+}
+
+.header h1 {
+  text-align: right;
+  color: #009688;
 }
 
 /* Estilo para la información de la factura */
-.factura-info {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+.invoice-details {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.factura-info label {
-  display: inline-block;
-  width: 150px;
-  font-weight: bold;
-  margin-right: 10px;
+.invoice-details .invoice-info {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Estilo para las secciones de detalles */
-.invoice-details, .customer-details, .payment-details {
-  margin: 20px 0;
+.invoice-info div {
+  margin: 5px 0;
+}
+
+/* Estilo para los detalles del cliente */
+.customer-details {
+  margin-bottom: 20px;
+}
+
+.customer-details h2 {
+  color: #009688;
+}
+
+.customer-details p {
+  margin: 5px 0;
+}
+
+/* Estilo para los detalles de pago */
+.payment-details {
+  margin-bottom: 20px;
+}
+
+.payment-details h3 {
+  color: #009688;
+}
+
+.payment-details p {
+  margin: 5px 0;
 }
 
 /* Estilo para el título de productos */
 h2 {
+  color: #009688;
   margin-top: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 /* Estilo para la tabla de productos */
@@ -58,26 +105,32 @@ table {
   margin-bottom: 20px;
 }
 
-table, th, td {
+table th, table td {
   border: 1px solid #ddd;
-}
-
-th, td {
   padding: 10px;
-  text-align: center;
+  text-align: left;
 }
 
-th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+table th {
+  background-color: #009688;
+  color: white;
 }
 
-/* Estilo para el botón de imprimir */
-button.btn.btn-primary {
-  display: block;
+/* Estilo para los totales */
+.totals {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.totals p {
+  margin: 5px 0;
+}
+
+/* Estilo para los botones */
+button.btn {
+  display: inline-block;
   width: 200px;
-  margin: 0 auto 20px auto; /* Alineado al centro con margen inferior */
-  background-color: #007bff;
+  background-color: #009688;
   color: #fff;
   border: none;
   padding: 10px;
@@ -88,46 +141,95 @@ button.btn.btn-primary {
   transition: background-color 0.3s ease;
 }
 
-button.btn.btn-primary:hover {
-  background-color: #0056b3;
+button.btn:hover {
+  background-color: #00796b;
 }
 
-/* Estilo para el mensaje de carga */
-p {
+button.btn-secondary {
+  background-color: #f0ad4e;
+}
+
+button.btn-secondary:hover {
+  background-color: #ec971f;
+}
+
+/* Estilo para el pie de página */
+.footer {
   text-align: center;
-  font-size: 1.2em;
-  color: #888;
+  padding: 20px 0;
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+.footer h2 {
+  color: #009688;
 }
 
 /* Estilos específicos para la impresión */
 @media print {
-  /* Ocultar el menú lateral y el botón de imprimir */
+  /* Ocultar el menú lateral y los botones de imprimir y editar */
   app-sidebar,
-  button.btn.btn-primary {
+  .actions {
       display: none;
   }
 
   /* Ajustar el contenedor para impresión */
   .container {
       max-width: 100%;
+      width: 100%;
       padding: 0;
       margin: 0;
       border: none;
   }
 
   /* Ajustar márgenes y paddings para la impresión */
-  .factura-info, .table-responsive {
-      border: none;
-      padding: 0;
+  .header,
+  .invoice-details,
+  .customer-details,
+  .payment-details,
+  .table-responsive,
+  .totals,
+  .footer {
+      padding: 0 20px;
   }
 
-  /* Eliminar bordes de la tabla para la impresión */
-  table, th, td {
+  /* Ajustar estilos de la tabla para la impresión */
+  table {
+      width: 100%;
       border: 1px solid #000;
   }
 
-  /* Ocultar cualquier otro elemento no deseado */
-  .no-print {
-      display: none;
+  table th, table td {
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: left;
+  }
+
+  table th {
+      background-color: #009688 !important;
+      color: white !important;
+  }
+
+  /* Asegurar que todos los colores de fondo y texto se impriman correctamente */
+  * {
+      -webkit-print-color-adjust: exact;
+      color-adjust: exact;
+  }
+
+  /* Ajustar estilos para asegurar que todo el contenido se imprime correctamente */
+  .header .logo {
+      max-height: 100px;
+  }
+
+  .header h1 {
+      color: #009688;
+  }
+
+  .customer-details h2,
+  .payment-details h3,
+  h2 {
+      color: #009688;
   }
 }

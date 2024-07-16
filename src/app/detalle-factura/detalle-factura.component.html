@@ -1,48 +1,73 @@
 <app-sidebar></app-sidebar>
 
+
+
 <div class="container">
-    <h1>Detalle de Factura</h1>
-    <div *ngIf="facturaDetalles">
-        <div class="factura-info">
-            <label><strong>Factura N°:</strong></label> {{ facturaDetalles.factura_id }}<br>
-            <label><strong>Cliente:</strong></label> {{ facturaDetalles.clienteNombre }}<br>
-            <label><strong>Fecha de Emisión:</strong></label> {{ facturaDetalles.fecha }}<br>
-            <label><strong>Tipo de Pago:</strong></label> {{ facturaDetalles.tipoPagoNombre }}<br>
-            <label><strong>IVA Aplicado:</strong></label> {{ facturaDetalles.iva }}<br>
-            <label><strong>Total:</strong></label> {{ facturaDetalles.total }}<br>
-        </div>
-
-        <h2>Productos</h2>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Producto</th>
-                        <th>Descripción</th>
-                        <th>Cantidad</th>
-                        <th>Precio Unitario</th>
-                        <th>Subtotal</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of facturaDetalles.detalle">
-                        <td>{{ item.producto_id }}</td>
-                        <td>{{ item.nombreProducto }}</td>
-                        <td>{{ item.descripcion }}</td>
-                        <td>{{ item.cantidad }}</td>
-                        <td>{{ item.precio_unitario }}</td>
-                        <td>{{ item.subtotal }}</td>
-                        <td>{{ item.total }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <button class="btn btn-primary" (click)="imprimirFactura()">Imprimir Factura</button>
+    <div class="header">
+        <img src="../../assets/images/Logo 2.jpg" alt="Logo" class="logo">
+        <h1>FACTURA</h1>
     </div>
-    <div *ngIf="!facturaDetalles">
-        <p>Cargando detalles de la factura...</p>
+
+    <div class="invoice-details">
+        <div class="invoice-info">
+            <div>
+                <label><strong>Fecha:</strong></label> {{ facturaDetalles.fecha }}
+            </div>
+            <div>
+                <label><strong>Factura N°:</strong></label> {{ facturaDetalles.factura_id }}
+            </div>
+        </div>
     </div>
+
+    <div class="customer-details">
+        <h2>{{ facturaDetalles.cedula_cliente }}</h2>
+        <p>{{ facturaDetalles.clienteDireccion }}</p>
+        <p>{{ facturaDetalles.clienteTelefono }}</p>
+        <p>{{ facturaDetalles.clienteEmail }}</p>
+    </div>
+
+    <div class="payment-details">
+        <h3>Método de Pago</h3>
+        <label><strong>Tipo de pago:</strong></label> {{ facturaDetalles.factura_id }}
+        <p><strong>Correo:</strong> hola@sitioincreible.mx</p>
+    </div>
+
+    <h2>Productos</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ARTÍCULO</th>
+                    <th>CANT.</th>
+                    <th>PRECIO</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of facturaDetalles.detalle">
+                    <td>{{ item.nombreProducto }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>{{ item.precio_unitario | currency }}</td>
+                    <td>{{ item.total | currency }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="totals">
+        <p><strong>Subtotal:</strong> {{ facturaDetalles.subtotal | currency }}</p>
+        <p><strong>IVA ({{ facturaDetalles.iva }}%):</strong> {{ facturaDetalles.ivaTotal | currency }}</p>
+        <p><strong>Total:</strong> {{ facturaDetalles.total | currency }}</p>
+    </div>
+
+    <div class="footer">
+        <p>¿Alguna pregunta? Envíanos un correo a ingenieriaensoftware.utn@gmail.com</p>
+        <p>Ibarra - Ecuador</p>
+        <h2>¡GRACIAS!</h2>
+    </div>
+</div>
+
+<div class="actions">
+    <button class="btn btn-primary" (click)="imprimirFactura()">Imprimir Factura</button>
+    
 </div>

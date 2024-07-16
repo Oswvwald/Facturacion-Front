@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiFacturacionService } from '../services/api-facturacion.service';
 
 @Component({
@@ -11,10 +11,9 @@ export class DetalleFacturaComponent implements OnInit {
   facturaId: string;
   facturaDetalles: any;
 
-  constructor(private route: ActivatedRoute, private api: ApiFacturacionService) { }
+  constructor(private route: ActivatedRoute, private api: ApiFacturacionService, private router: Router) { }
 
   ngOnInit(): void {
-    // Asigna un valor por defecto si el id es null
     this.facturaId = this.route.snapshot.paramMap.get('id') ?? '';
     this.obtenerDetallesFactura();
   }
@@ -31,5 +30,9 @@ export class DetalleFacturaComponent implements OnInit {
 
   imprimirFactura() {
     window.print();
+  }
+
+  editarFactura() {
+    this.router.navigate(['/edit-invoice', this.facturaId]);
   }
 }

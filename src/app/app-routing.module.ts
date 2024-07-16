@@ -16,7 +16,7 @@ import { AuthGuard } from './auth.guard';
 import { LoginGuard } from './login.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/homePage', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'clientes-view', component: ClientesViewComponent, canActivate: [AuthGuard], data: { expectedFunctionality: 'FACT-CLIEN' }},
   { path: 'sidebar', component: SidebarComponent },
   { path: 'facturas-view', component: FacturaViewComponent, canActivate: [AuthGuard], data: { expectedFunctionality: 'FACT-FTURA' }},

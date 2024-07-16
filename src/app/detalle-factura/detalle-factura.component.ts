@@ -9,13 +9,23 @@ import { ApiFacturacionService } from '../services/api-facturacion.service';
 })
 export class DetalleFacturaComponent implements OnInit {
   facturaId: string;
-  facturaDetalles: any;
+  facturaDetalles: any = { detalle: [] }; // Inicializa facturaDetalles con un objeto vacío
 
   constructor(private route: ActivatedRoute, private api: ApiFacturacionService, private router: Router) { }
 
   ngOnInit(): void {
     this.facturaId = this.route.snapshot.paramMap.get('id') ?? '';
     this.obtenerDetallesFactura();
+    this.obtenerProductosFactura();
+  }
+
+  obtenerProductosFactura() {
+    this.api.verProductosFactura(this.facturaId).subscribe((data: any) => {
+      console.log('Productos de la factura:', data.detallesFactura); // Depuración
+      this.facturaDetalles.detalle = data.detallesFactura; // Asigna los productos a detalle dentro de facturaDetalles
+    }, (error: any) => {
+      console.error('Error al obtener productos de la factura', error);
+    });
   }
 
   obtenerDetallesFactura() {
@@ -34,5 +44,9 @@ export class DetalleFacturaComponent implements OnInit {
 
   editarFactura() {
     this.router.navigate(['/edit-invoice', this.facturaId]);
+  }
+
+  cancelarimpresion() {
+    this.router.navigate(['/facturas-view']);
   }
 }

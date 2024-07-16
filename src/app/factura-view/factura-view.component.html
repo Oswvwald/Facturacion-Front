@@ -3,10 +3,11 @@
 <div class="container">
     <h1>Gestión de Facturas</h1>
     <button class="botonCrear" (click)="crearFactura()">Crear Factura</button>
-    
+
     <!-- Campo de búsqueda -->
     <div class="input-group mb-3" style="width: 200px; float: right;">
-        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="buscarTexto" (input)="filtrarFacturas()">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="buscarTexto"
+            (input)="filtrarFacturas()">
     </div>
 
     <div class="table-responsive-xl">
@@ -14,35 +15,48 @@
             <caption>Lista de facturas</caption>
             <thead>
                 <tr>
+                    <th scope="col">Acciones</th>
                     <th scope="col">Número de Factura</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Tipo de Pago</th>
+                    <th scope="col">Lista de productos</th>
                     <th scope="col">Fecha de Emisión</th>
                     <th scope="col">Total</th>
                     <th scope="col">Iva aplicado</th>
-                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let factura of facturasMostradas">
-                    <td scope="row">{{factura.factura_id}}</td>
-                    <td>{{factura.NombresCliente}}</td>
-                    <td>{{factura.tipoPagoNombre}}</td>
-                    <td>{{factura.fecha}}</td>
-                    <td>{{factura.total}}</td>
-                    <td>{{factura.iva}}</td>
                     <td>
                         <!-- <button class="editar" (click)="editFactura(factura)">Editar</button> -->
                         <button class="editar" (click)="verDetallesFactura(factura.factura_id)">Detalles</button>
                         <!-- <button class="eliminar" (click)="deleteFactura(factura.factura_id)">Eliminar</button> -->
                     </td>
+                    <td scope="row">{{factura.factura_id}}</td>
+                    <td>{{factura.NombresCliente}}</td>
+                    <td>{{factura.tipoPagoNombre}}</td>
+                    <td>
+                      <!-- Llama al método getNombresDetalles si aún no se ha llamado para esta factura -->
+                      <div *ngIf="nombresDetallesPorFacturaId[factura.factura_id] as nombresDetalles; else cargarNombres">
+                        <div *ngFor="let nombreDetalle of nombresDetalles">{{nombreDetalle}}</div>
+                      </div>
+                      <ng-template #cargarNombres>
+                        <!-- Puedes llamar al método aquí si es adecuado, o asegurarte de que se llame en otro lugar -->
+                        {{ getNombresDetalles(factura.factura_id) }}
+                      </ng-template>
+                    </td>
+                    <td>{{factura.fecha}}</td>
+                    <td>{{factura.total}}</td>
+                    <td>{{factura.iva}}</td>
                 </tr>
             </tbody>
         </table>
-        
+
         <!-- Proceso de paginación -->
         <div class="d-flex justify-content-between align-items-center">
-            <span>Mostrando {{(paginaActual - 1) * facturasPorPagina + 1}} a {{paginaActual * facturasPorPagina > facturasFiltradas.length ? facturasFiltradas.length : paginaActual * facturasPorPagina}} de {{facturasFiltradas.length}} facturas</span>
+            <span>Mostrando {{(paginaActual - 1) * facturasPorPagina + 1}} a {{paginaActual * facturasPorPagina >
+                facturasFiltradas.length ? facturasFiltradas.length : paginaActual * facturasPorPagina}} de
+                {{facturasFiltradas.length}} facturas</span>
             <nav aria-label="Page navigation example">
                 <ul class="pagination mb-0">
                     <li class="page-item" [class.disabled]="paginaActual === 1">

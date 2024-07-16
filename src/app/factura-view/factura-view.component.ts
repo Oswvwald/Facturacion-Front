@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiFacturacionService } from '../services/api-facturacion.service';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-factura-view',
@@ -14,7 +16,7 @@ export class FacturaViewComponent implements OnInit {
   buscarTexto: string = '';
 
   //Paginación Facturas
-  facturasPorPagina: number = 2;
+  facturasPorPagina: number = 10;
   paginaActual: number = 1;
   facturasMostradas: any[] = [];
 
@@ -23,6 +25,7 @@ export class FacturaViewComponent implements OnInit {
   clientesFactura: Array<any> = [];
   facturasImprimir: Array<any> = [];
   detalleFactura: Array<any> = [];
+  nombresDetallesPorFacturaId: { [facturaId: string]: string[] } = {};
 
   constructor(private api: ApiFacturacionService, private router: Router) {
     //Actualización de las facturas mostradas 
@@ -67,6 +70,14 @@ export class FacturaViewComponent implements OnInit {
     this.api.getTipoPago().subscribe((res: any) => {
       this.tipoPago = res.tipoPago;
       this.getClientes();
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
+  getNombresDetalles(facturaId: string) {
+    this.api.getNombresDetalleFactura(facturaId).subscribe((res: any) => {
+      this.nombresDetallesPorFacturaId[facturaId] = res.nombresProductos;
     }, (error: any) => {
       console.log(error);
     });

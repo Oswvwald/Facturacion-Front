@@ -222,6 +222,33 @@ export class ApiFacturacionService {
     );
   }
 
+
+  //agregar el detalle de la factura
+  createDetalleFactura(detalleFactura: any): Observable<any> {
+    this.userloged = this.userLogged;
+    return this.api.post(this.url + 'detalle_factura', detalleFactura).pipe(
+      tap(() => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'create',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'detalle_factura',
+          aud_observacion: `Creación de detalle de factura con ID: ${detalleFactura.detalle_factura_id}`
+        }).subscribe();
+      })
+    );
+  }
+
+  //ver productos de la factura
+  verProductosFactura(facturaId: string): Observable<any> {
+    return this.api.get(this.url + 'detalle_factura/factura/' + facturaId);
+  }
+
+  //Traer nombres del detalle de factura
+  getNombresDetalleFactura(facturaid: string): Observable<any> {
+    return this.api.get(this.url + 'detalle_factura/factura/' + facturaid + '/nombres_productos');
+  }
+
   //Productos
   //
   //Obtener todos los productos

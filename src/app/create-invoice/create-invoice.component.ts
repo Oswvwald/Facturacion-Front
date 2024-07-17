@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from '../models/client.model';
 import { ApiFacturacionService } from '../services/api-facturacion.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 interface Producto {
   iD_Producto: number;
@@ -35,6 +36,7 @@ export class CreateInvoiceComponent implements OnInit {
 
   // Productos
   productos: Producto[] = [];
+  originalProductos: Producto[] = []; // Para almacenar los productos originales con su stock inicial
   filteredProductos: Producto[] = [];
   productSearch: string = '';
   selectedProduct: Producto;
@@ -99,6 +101,19 @@ export class CreateInvoiceComponent implements OnInit {
     });
   }
 
+  getProductById(productId: number): Observable<any> {
+    return this.api.getProductById(productId);
+  }
+
+  updateProducto(productId: number, updatedData: any) {
+    this.api.updateProduct(productId, updatedData).subscribe((response: any) => {
+      console.log('Producto actualizado:', response);
+      this.getProductos(); // Vuelve a obtener los productos para actualizar la lista
+    }, (error: any) => {
+      console.error('Error al actualizar producto', error);
+    });
+  }
+
   filterProducts() {
     this.filteredProductos = this.productos.filter(producto =>
       producto.nombre.toLowerCase().includes(this.productSearch.toLowerCase()) ||
@@ -139,20 +154,36 @@ export class CreateInvoiceComponent implements OnInit {
         };
         this.carrito.push(itemCarrito);
       }
+
+      // Actualizar el stock del producto solo en el frontend
+      this.selectedProduct.stockProducto -= this.cantidad;
+
       this.updateTotalCarrito();
       this.calculatePages();
       console.log('Carrito actualizado:', this.carrito); // Depuración
     }
   }
-  
-
+ 
   removeProductFromCart(item: any) {
     const index = this.carrito.indexOf(item);
     if (index > -1) {
       this.carrito.splice(index, 1);
-      this.updateTotalCarrito();
+
+      // Obtener el producto original y restaurar su stock en el frontend
+      this.getProductById(item.iD_Producto).subscribe((productoOriginal: Producto) => {
+        const productoActualizado = this.productos.find(prod => prod.iD_Producto === item.iD_Producto);
+        if (productoActualizado) {
+          productoActualizado.stockProducto = productoOriginal.stockProducto;
+        }
+        this.updateTotalCarrito();
+      }, (error: any) => {
+        console.error('Error al obtener el producto original', error);
+      });
     }
   }
+
+
+
 
   updateProductInCart(item: any, newCantidad: number) {
     const productoEnCarrito = this.carrito.find(producto => producto.iD_Producto === item.iD_Producto);
@@ -206,7 +237,16 @@ export class CreateInvoiceComponent implements OnInit {
           console.error('Error al guardar detalle de factura', error);
         });
       });
-  
+
+        // Actualizar el stock de los productos en el backend
+        this.carrito.forEach(item => {
+          const productoActualizado = {
+            ...item,
+            stockProducto: item.stockProducto - item.cantidad
+          };
+          this.updateProducto(item.iD_Producto, productoActualizado);
+        });
+
       this.resetForm();
     }, (error) => {
       console.error('Error al crear la factura', error);

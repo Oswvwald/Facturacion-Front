@@ -408,6 +408,40 @@ export class ApiFacturacionService {
     );
   }
 
+     // Obtener un producto por ID
+  getProductById(productId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/Producto/${productId}`).pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          scan((acc, error) => {
+            if (acc >= 3) {
+              throw error;
+            }
+            return acc + 1;
+          }, 0),
+          delay(1000)
+        )
+      )
+    );
+  }
+
+  // Actualizar un producto
+  updateProduct(productId: number, productData: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/Producto/${productId}`, productData).pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          scan((acc, error) => {
+            if (acc >= 3) {
+              throw error;
+            }
+            return acc + 1;
+          }, 0),
+          delay(1000)
+        )
+      )
+    );
+  }
+
   //Login
   //
   //Iniciar sesión

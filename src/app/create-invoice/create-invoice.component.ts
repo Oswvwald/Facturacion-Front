@@ -9,7 +9,7 @@ interface Producto {
   codigo: string;
   nombre: string;
   descripcion: string;
-  stockProducto: number;
+  stockProducto: number;  
   costo: number;
   pvp: number;
   gravaIVA: boolean;
@@ -46,9 +46,8 @@ export class CreateInvoiceComponent implements OnInit {
 
   showValidationError: boolean = false;
 
-
   constructor(private api: ApiFacturacionService, private router: Router) {
-    this.facturaId = 'FACT-XXXXX' ;
+    this.facturaId = 'FACT-XXXXX';
   }
 
   ngOnInit(): void {
@@ -92,26 +91,25 @@ export class CreateInvoiceComponent implements OnInit {
 
   getProductos() {
     this.api.getProducts().subscribe((res: any) => {
-      // Filtrar solo los productos con "estado" en true
       const productosActivos = res.filter((producto: any) => producto.estado === true);
       this.productos = productosActivos;
       this.filteredProductos = productosActivos;
+      this.originalProductos = JSON.parse(JSON.stringify(productosActivos)); // Copia profunda de los productos originales
     }, (error: any) => {
       console.log(error);
     });
   }
 
-  getProductById(productId: number): Observable<any> {
-    return this.api.getProductById(productId);
-  }
-
   updateProducto(productId: number, updatedData: any) {
     this.api.updateProduct(productId, updatedData).subscribe((response: any) => {
       console.log('Producto actualizado:', response);
-      this.getProductos(); // Vuelve a obtener los productos para actualizar la lista
     }, (error: any) => {
       console.error('Error al actualizar producto', error);
     });
+  }
+
+  getProductById(productId: number): Observable<any> {
+    return this.api.getProductById(productId);
   }
 
   filterProducts() {
@@ -130,20 +128,27 @@ export class CreateInvoiceComponent implements OnInit {
 
   addProductToCart() {
     if (this.selectedProduct && this.cantidad > 0) {
+      const productoEnCarrito = this.carrito.find(item => item.iD_Producto === this.selectedProduct.iD_Producto);
+
+      // Verificar la cantidad total de este producto en el carrito
+      const cantidadTotalEnCarrito = productoEnCarrito ? productoEnCarrito.cantidad : 0;
+     
+
+      if (this.cantidad > this.selectedProduct.stockProducto ) {
+        alert('No hay suficiente stock para este producto.');
+        return;
+      }
+
       let precioUnitario = this.selectedProduct.gravaIVA ? this.selectedProduct.pvp : this.selectedProduct.costo;
       precioUnitario = Number(precioUnitario.toFixed(2)); // Limitar a 2 decimales
-  
-      const productoEnCarrito = this.carrito.find(item => item.iD_Producto === this.selectedProduct.iD_Producto);
+
       if (productoEnCarrito) {
-        // Si el producto ya está en el carrito, actualizamos la cantidad y los valores asociados.
         productoEnCarrito.cantidad += this.cantidad;
         productoEnCarrito.subtotal = Number((productoEnCarrito.cantidad * precioUnitario).toFixed(2));
-        productoEnCarrito.total = productoEnCarrito.gravaIva
+        productoEnCarrito.total = productoEnCarrito.gravaIVA
           ? Number((productoEnCarrito.subtotal * (1 + this.iva / 100)).toFixed(2))
           : productoEnCarrito.subtotal;
       } else {
-        // Si el producto no está en el carrito, lo agregamos.
-        console.log('Producto que no está en carrito a agregar:', this.selectedProduct); // Depuración
         const itemCarrito = {
           ...this.selectedProduct,
           cantidad: this.cantidad,
@@ -160,10 +165,9 @@ export class CreateInvoiceComponent implements OnInit {
 
       this.updateTotalCarrito();
       this.calculatePages();
-      console.log('Carrito actualizado:', this.carrito); // Depuración
     }
   }
- 
+
   removeProductFromCart(item: any) {
     const index = this.carrito.indexOf(item);
     if (index > -1) {
@@ -182,21 +186,37 @@ export class CreateInvoiceComponent implements OnInit {
     }
   }
 
-
-
-
   updateProductInCart(item: any, newCantidad: number) {
     const productoEnCarrito = this.carrito.find(producto => producto.iD_Producto === item.iD_Producto);
-    if (productoEnCarrito) {
+    const productoOriginal = this.productos.find(producto => producto.iD_Producto === item.iD_Producto);
+
+    if (productoEnCarrito && productoOriginal) {
+      const diferenciaCantidad = newCantidad - productoEnCarrito.cantidad;
+
+      if (diferenciaCantidad > 0 && diferenciaCantidad > productoOriginal.stockProducto) {
+        alert('No hay suficiente stock para este producto.');
+        return;
+      }
+
       productoEnCarrito.cantidad = newCantidad;
-      productoEnCarrito.subtotal = Number((newCantidad * productoEnCarrito.pvp).toFixed(2)); // Limitar a 2 decimales
+      productoOriginal.stockProducto -= diferenciaCantidad;
+
+      productoEnCarrito.subtotal = Number((newCantidad * productoEnCarrito.pvp).toFixed(2));
       productoEnCarrito.total = productoEnCarrito.gravaIVA
-        ? Number((productoEnCarrito.subtotal * (1 + this.iva / 100)).toFixed(2)) // Limitar a 2 decimales
+        ? Number((productoEnCarrito.subtotal * (1 + this.iva / 100)).toFixed(2))
         : productoEnCarrito.subtotal;
+
       this.updateTotalCarrito();
     }
   }
-  
+
+  validateAndUpdateQuantity(item: any) {
+    if (item.cantidad > item.stockProducto) {
+      item.cantidad = 1;
+      alert('No hay suficiente stock para este producto.');
+    }
+    this.updateProductInCart(item, item.cantidad);
+  }
 
   createInvoice() {
     const detalleFactura = this.carrito.map(item => ({
@@ -211,7 +231,7 @@ export class CreateInvoiceComponent implements OnInit {
       subtotal: item.subtotal,
       total: item.total
     }));
-  
+
     const factura = {
       factura_id: this.facturaId,
       cedula_cliente: this.selectedCliente.cedula,
@@ -221,14 +241,12 @@ export class CreateInvoiceComponent implements OnInit {
       iva: this.iva,
       detalle: detalleFactura
     };
-  
+
     this.api.createFactura(factura).subscribe((response: any) => {
       console.log('Factura creada', response);
-  
-      // Obtener el factura_id asignado por el servidor
+
       const factura_id_asignado = response.factura.factura_id;
-  
-      // Actualizar el detalle de la factura con el factura_id asignado
+
       detalleFactura.forEach(detalle => {
         detalle.factura_id = factura_id_asignado;
         this.api.createDetalleFactura(detalle).subscribe((res: any) => {
@@ -238,22 +256,22 @@ export class CreateInvoiceComponent implements OnInit {
         });
       });
 
-        // Actualizar el stock de los productos en el backend
-        this.carrito.forEach(item => {
-          const productoActualizado = {
-            ...item,
-            stockProducto: item.stockProducto - item.cantidad
-          };
-          this.updateProducto(item.iD_Producto, productoActualizado);
-        });
+      this.carrito.forEach(item => {
+        const productoActualizado = {
+          ...item,
+          stockProducto: item.stockProducto - item.cantidad
+        };
+        this.updateProducto(item.iD_Producto, productoActualizado);
+      });
 
       this.resetForm();
+      alert('La factura se ha creado exitosamente.');
+      this.router.navigate(['/facturas-view']);
     }, (error) => {
       console.error('Error al crear la factura', error);
     });
     this.showValidationError = false;
   }
-  
 
   resetForm() {
     this.cedulaInput = '';
@@ -272,7 +290,6 @@ export class CreateInvoiceComponent implements OnInit {
   itemsPerPage: number = 5;
   totalPages: number;
   pages: number[] = [];
-
   calculatePages() {
     this.totalPages = Math.ceil(this.carrito.length / this.itemsPerPage);
     this.pages = Array.from({ length: this.totalPages }, (v, k) => k + 1);
@@ -300,8 +317,6 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   showAlert(message: string, type: string, icon: string) {
-    // Example implementation using console.log
-    // Replace this with your actual alert display logic
     console.log(`Alert: ${message}, Type: ${type}, Icon: ${icon}`);
   }
 
@@ -310,7 +325,6 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   isFormValid(): boolean {
-    // Verificar si todos los campos requeridos están llenos
     return (
       this.cedulaInput && this.selectedCliente.cedula &&
       this.selectedCliente.nombres && this.selectedCliente.apellidos &&
@@ -319,5 +333,4 @@ export class CreateInvoiceComponent implements OnInit {
       this.tipoPago && this.iva !== null && this.iva !== undefined
     );
   }
-  
 }

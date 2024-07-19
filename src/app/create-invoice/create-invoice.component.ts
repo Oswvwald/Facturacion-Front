@@ -134,7 +134,7 @@ export class CreateInvoiceComponent implements OnInit {
       // Verificar la cantidad total de este producto en el carrito
       const cantidadTotalEnCarrito = productoEnCarrito ? productoEnCarrito.cantidad : 0;
      
-      if (this.cantidad + cantidadTotalEnCarrito > this.selectedProduct.stockProducto ) {
+      if (this.cantidad  > this.selectedProduct.stockProducto ) {
         alert('No hay suficiente stock para este producto.');
         return;
       }

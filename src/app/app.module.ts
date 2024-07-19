@@ -23,6 +23,7 @@ import { AuthInterceptor } from './auth.interceptor'; // Importamos el intercept
 import { DetalleFacturaComponent } from './detalle-factura/detalle-factura.component';
 
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     TipoPagoDialogComponent,
     PaginaPrincipalComponent,
     DetalleFacturaComponent,
+    EditInvoiceComponent,
   ],
   imports: [
     BrowserModule,

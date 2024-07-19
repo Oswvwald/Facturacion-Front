@@ -117,8 +117,12 @@ export class FacturaViewComponent implements OnInit {
       console.log(error);
     });
   }
+
   verDetallesFactura(facturaId: string) {
     this.router.navigate(['/detalle-factura', facturaId]);
-}
+  }
 
+  editFactura(facturaId: string) {
+    this.router.navigate(['/edit-invoice', facturaId]);
+  }
 }

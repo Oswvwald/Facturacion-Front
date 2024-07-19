@@ -1,7 +1,7 @@
 <app-sidebar></app-sidebar>
 
 <div class="container">
-  <h1>Gestión de Facturas</h1>
+  <h1>Edición de Factura</h1>
   <div class="container">
     <div class="contenedor-flex">
       <label for="fecha" class="fecha-Factura">Fecha: <b>{{ fechaFactura }}</b></label>
@@ -9,50 +9,50 @@
     </div>
     <div class="row">
       <div>
-        <button (click)="createInvoice()" [disabled]="!isFormValid()">Guardar Factura</button>
-        <button (click)="cancelarFactura()" style="margin: 20px;"> Cancelar </button>
+        <button (click)="saveInvoice()" [disabled]="!isFormValid()">Guardar Cambios</button>
+        <button (click)="cancelarFactura()" style="margin: 20px;">Cancelar</button>
       </div>
       <div class="column">
         <div>
-          <label for="clienteSearch">Buscar Cliente:</label>
-          <input id="clienteSearch" type="text" [(ngModel)]="clienteSearchInput" (input)="onSearchCliente()" [matAutocomplete]="auto" />
+          <label for="cedula">Buscar Cliente:</label>
+          <input id="cedula" type="text" [(ngModel)]="cedulaInput" (input)="onSearchCliente()" [matAutocomplete]="auto" />
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectCliente($event.option.value)">
             <mat-option *ngFor="let cliente of filteredClientes" [value]="cliente.cedula">
-              {{ cliente.cedula }} - {{ cliente.nombres }} {{ cliente.apellidos }}
+              {{ cliente.cedula }}
             </mat-option>
           </mat-autocomplete>
         </div>
         <div>
           <label for="cedula">Cédula:</label>
-          <input id="cedula" type="text" [(ngModel)]="cedulaInput" disabled />
+          <input id="cedula" type="text" [(ngModel)]="selectedCliente.cedula" disabled />
         </div>
         <div>
           <label for="nombres">Nombres:</label>
-          <input id="nombres" type="text" [(ngModel)]="selectedCliente.nombres" disabled required />
+          <input id="nombres" type="text" [(ngModel)]="selectedCliente.nombres" disabled />
         </div>
         <div>
           <label for="apellidos">Apellidos:</label>
-          <input id="apellidos" type="text" [(ngModel)]="selectedCliente.apellidos" disabled required />
+          <input id="apellidos" type="text" [(ngModel)]="selectedCliente.apellidos" disabled />
         </div>
       </div>
       <div class="column">
         <div>
           <label for="direccion">Dirección:</label>
-          <input id="direccion" type="text" [(ngModel)]="selectedCliente.direccion" disabled required />
+          <input id="direccion" type="text" [(ngModel)]="selectedCliente.direccion" disabled />
         </div>
         <div>
           <label for="telefono">Teléfono:</label>
-          <input id="telefono" type="text" [(ngModel)]="selectedCliente.telefono" disabled required />
+          <input id="telefono" type="text" [(ngModel)]="selectedCliente.telefono" disabled />
         </div>
         <div>
           <label for="correo">Correo:</label>
-          <input id="correo" type="text" [(ngModel)]="selectedCliente.email" disabled required />
+          <input id="correo" type="text" [(ngModel)]="selectedCliente.email" disabled />
         </div>
       </div>
       <div class="column">
         <div>
           <label for="fecha">Fecha de nacimiento:</label>
-          <input id="fecha" type="text" [(ngModel)]="selectedCliente.fecha_nacimiento" disabled required />
+          <input id="fecha" type="text" [(ngModel)]="selectedCliente.fecha_nacimiento" disabled />
         </div>
         <div>
           <label for="tipoPago">Tipo de Pago:</label>
@@ -85,7 +85,8 @@
           </div>
           <div class="modal-body">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Buscar producto..." [(ngModel)]="productSearch" (input)="filterProducts()" />
+              <input type="text" class="form-control" placeholder="Buscar producto..." [(ngModel)]="productSearch"
+                (input)="filterProducts()" />
               <button class="btn btn-outline-secondary" type="button" (click)="filterProducts()">Buscar</button>
             </div>
             <div class="table-responsive">
@@ -110,7 +111,8 @@
                     <td>{{ producto.pvp }}</td>
                     <td>{{ producto.gravaIVA}}</td>
                     <td>
-                      <button class="btn btn-success" (click)="addProductToCartFromModal(producto)">Agregar al carrito</button>
+                      <button class="btn btn-success" (click)="addProductToCartFromModal(producto)">Agregar al
+                        carrito</button>
                     </td>
                   </tr>
                 </tbody>
@@ -140,7 +142,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of carrito">
+          <tr *ngFor="let item of paginatedItems">
             <td>{{ item.codigo }}</td>
             <td>{{ item.nombre }}</td>
             <td>{{ item.descripcion }}</td>
@@ -156,6 +158,7 @@
         </tbody>
       </table>
 
+      <!-- Proceso de paginación -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item" [class.disabled]="currentPage === 1">

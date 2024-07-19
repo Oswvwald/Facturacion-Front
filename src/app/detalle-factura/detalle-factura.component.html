@@ -1,10 +1,9 @@
-<!-- Acciones -->
 <div class="actions">
     <button class="btn btn-primary" (click)="imprimirFactura()">Imprimir Factura</button>
     <button class="btn btn-secondary" (click)="cancelarimpresion()">Volver</button>
 </div>
 
-<div class="container">
+<div class="container" *ngIf="facturaDetalles && clienteDetalles">
     <!-- Encabezado y detalles de la factura -->
     <div class="header">
         <img src="../../assets/images/Logo 2.jpg" alt="Logo" class="logo">
@@ -22,18 +21,16 @@
         </div>
     </div>
 
-    <div class="customer-details" >
-        <h2>{{ clienteDetalles[0].apellidos }} {{ clienteDetalles[0].nombres }} </h2>
-        <p><strong>Dirección: </strong>{{ clienteDetalles[0].direccion }}</p>
-        <p><strong>Telefono: </strong>{{ clienteDetalles[0].telefono }}</p>
-        
-      
+    <div class="customer-details" *ngIf="clienteDetalles">
+        <h2>{{ clienteDetalles.apellidos }} {{ clienteDetalles.nombres }}</h2>
+        <p><strong>Dirección: </strong>{{ clienteDetalles.direccion }}</p>
+        <p><strong>Telefono: </strong>{{ clienteDetalles.telefono }}</p>
     </div>
 
     <div class="payment-details">
         <h3>Método de Pago</h3>
         <label><strong>Tipo de pago:</strong></label> {{ facturaDetalles.tipo_pago }}
-        <label><strong>correo:</strong></label> {{ clienteDetalles[0].email }}
+        <label><strong>Correo:</strong></label> {{ clienteDetalles.email }}
     </div>
 
     <!-- Detalles de los productos -->

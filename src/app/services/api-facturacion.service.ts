@@ -5,7 +5,6 @@ import { retryWhen, scan, delay } from 'rxjs/operators';
 import { tap, catchError, retry } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -17,13 +16,12 @@ export class ApiFacturacionService {
   private auditApi = 'https://api-modulo-seguridad.onrender.com/api/auditoria';
   private userApi: string = 'https://api-modulo-seguridad.onrender.com/api/myuser';
 
-
   private functionalities: string[] = [];
   private userloged: string;
 
   constructor(private api: HttpClient, private http: HttpClient) { }
 
-  //Auditoria
+  // Auditoría
   private sendAudit(auditoriaData: {
     aud_usuario: string,
     aud_accion: string,
@@ -39,54 +37,48 @@ export class ApiFacturacionService {
   }
 
   getUserLoggedId(): void {
-      const authToken = this.getAuthToken();
-      const headers = { 'Authorization': `Bearer ${authToken}` };
-  
-      this.http.get<{ usr_id: string }>(this.userApi, { headers }).pipe(
-        map(response => response.usr_id),
-        catchError(error => {
-          console.error('Error al obtener el ID del usuario logueado:', error);
-          return throwError(error); // Asegúrate de importar throwError de 'rxjs'
-        })
-      ).subscribe(usr_id => {
-        localStorage.setItem('user', usr_id);
-      });
-    }
+    const authToken = this.getAuthToken();
+    const headers = { 'Authorization': `Bearer ${authToken}` };
+
+    this.http.get<{ usr_id: string }>(this.userApi, { headers }).pipe(
+      map(response => response.usr_id),
+      catchError(error => {
+        console.error('Error al obtener el ID del usuario logueado:', error);
+        return throwError(error); // Asegúrate de importar throwError de 'rxjs'
+      })
+    ).subscribe(usr_id => {
+      localStorage.setItem('user', usr_id);
+    });
+  }
 
   get userLogged(): string {
     return localStorage.getItem('user') || '';
   }
 
-
-  //Clientes
-  //
-  //Obtener todos los clientes
+  // Clientes
   getClients(): Observable<any> {
     return this.api.get(this.url + 'clientes');
   }
 
-  //Obtener un cliente por cedula
   getClientByCedula(cedula: string): Observable<any> {
     return this.api.get(this.url + 'clientes/' + cedula);
   }
 
-  //Crear un cliente
   createClient(cliente: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.post(this.url + 'clientes', cliente).pipe(
       tap(() => {
         this.sendAudit({
-          aud_usuario: this.userloged, // Cambiado de 'user' a 'aud_usuario'
-          aud_accion: 'create', // Cambiado de 'action' a 'aud_accion'
-          aud_modulo: 'Facturación', // Cambiado de 'module' a 'aud_modulo'
-          aud_funcionalidad: 'clientes', // Cambiado de 'entity' a 'aud_funcionalidad'
-          aud_observacion: `Creación de cliente con cédula: ${cliente.cedula}` // Cambiado de 'description' a 'aud_observacion'
+          aud_usuario: this.userloged,
+          aud_accion: 'create',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'clientes',
+          aud_observacion: `Creación de cliente con cédula: ${cliente.cedula}`
         }).subscribe();
       })
     );
   }
 
-  //Editar un cliente
   editClient(cedula: string, cliente: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.put(this.url + 'clientes/' + cedula, cliente).pipe(
@@ -112,7 +104,6 @@ export class ApiFacturacionService {
     );
   }
 
-  //Eliminar un cliente
   deleteClient(cedula: string): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.delete(this.url + 'clientes/' + cedula).pipe(
@@ -138,96 +129,136 @@ export class ApiFacturacionService {
     );
   }
 
-  //Tipo de pago
-  //
-  //Obtener todos los tipos de pago
+  // Tipo de pago
   getTipoPago(): Observable<any> {
     return this.api.get(this.url + 'tipoPago');
   }
-  //Obtener un tipo de pago por id
+
   getTipoPagoById(id: string): Observable<any> {
     return this.api.get(this.url + 'tipoPago/' + id);
   }
-  //Crear un tipo de pago
+
   createTipoPago(tipoPago: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.post(this.url + 'tipoPago', tipoPago).pipe(
       tap(() => {
         this.sendAudit({
-          aud_usuario: this.userloged, // Asume que `userloged` contiene el usuario actual
-          aud_accion: 'create', // Indica la acción de crear un nuevo tipo de pago
-          aud_modulo: 'Facturación', // El módulo al que pertenece esta acción
-          aud_funcionalidad: 'tipoPago', // La funcionalidad específica dentro del módulo
-          aud_observacion: `Creación de tipo de pago: ${tipoPago.nombre}` // Detalle de la acción realizada
+          aud_usuario: this.userloged,
+          aud_accion: 'create',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'tipoPago',
+          aud_observacion: `Creación de tipo de pago: ${tipoPago.nombre}`
         }).subscribe();
       })
     );
   }
-  //Editar un tipo de pago
+
   editTipoPago(id: string, tipoPago: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.put(this.url + 'tipoPago/' + id, tipoPago).pipe(
       tap(() => {
         this.sendAudit({
-          aud_usuario: this.userloged, // Asume que `userloged` contiene el usuario actual
-          aud_accion: 'edit', // Indica la acción de editar un tipo de pago existente
-          aud_modulo: 'Facturación', // El módulo al que pertenece esta acción
-          aud_funcionalidad: 'tipoPago', // La funcionalidad específica dentro del módulo
-          aud_observacion: `Edición de tipo de pago con ID: ${id}` // Detalle de la acción realizada
+          aud_usuario: this.userloged,
+          aud_accion: 'edit',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'tipoPago',
+          aud_observacion: `Edición de tipo de pago con ID: ${id}`
         }).subscribe();
       })
     );
   }
-  //Eliminar un tipo de pago
+
   deleteTipoPago(id: string): Observable<any> {
     this.userloged = this.userLogged;
-      return this.api.delete(this.url + 'tipoPago/' + id).pipe(
-        tap(() => {
-          this.sendAudit({
-            aud_usuario: this.userloged, // Asume que `userloged` contiene el usuario actual
-            aud_accion: 'delete', // Indica la acción de eliminar un tipo de pago
-            aud_modulo: 'Facturación', // El módulo al que pertenece esta acción
-            aud_funcionalidad: 'tipoPago', // La funcionalidad específica dentro del módulo
-            aud_observacion: `Eliminación de tipo de pago con ID: ${id}` // Detalle de la acción realizada
-          }).subscribe();
-        })
-      );
-    }
+    return this.api.delete(this.url + 'tipoPago/' + id).pipe(
+      tap(() => {
+        this.sendAudit({
+          aud_usuario: this.userloged,
+          aud_accion: 'delete',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'tipoPago',
+          aud_observacion: `Eliminación de tipo de pago con ID: ${id}`
+        }).subscribe();
+      })
+    );
+  }
 
-  //Facturas
-  //
-  //Obtener todas las facturas
+  // Facturas
   getFacturas(): Observable<any> {
     return this.api.get(this.url + 'facturas');
   }
 
-  //Obtener una factura por id
   getFacturaById(id: string): Observable<any> {
     return this.api.get(this.url + 'facturas/' + id);
   }
 
-  //Crear una factura
+  getFacturaCompletaById(id: string): Observable<any> {
+    return this.api.get(`${this.url}facturas/${id}/completa`).pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          scan((acc, error) => {
+            if (acc >= 3) {
+              throw error;
+            }
+            return acc + 1;
+          }, 0),
+          delay(1000)
+        )
+      )
+    );
+  }
+
+  getProductosPorFactura(facturaId: string): Observable<any> {
+    return this.http.get(`${this.url}detalle_factura/detalles_por_factura/${facturaId}`).pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          scan((acc, error) => {
+            if (acc >= 3) {
+              throw error;
+            }
+            return acc + 1;
+          }, 0),
+          delay(1000)
+        )
+      )
+    );
+  }
+
+  getFacturaDetallesById(facturaId: string): Observable<any> {
+    return this.api.get(`${this.url}detalle_factura/detalles_por_factura/${facturaId}`).pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          scan((acc, error) => {
+            if (acc >= 3) {
+              throw error;
+            }
+            return acc + 1;
+          }, 0),
+          delay(1000)
+        )
+      )
+    );
+  }
+
   createFactura(factura: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.post(this.url + 'facturas', factura).pipe(
       tap((response) => {
         this.sendAudit({
-          aud_usuario: this.userloged, // Asume que `userloged` contiene el usuario actual
-          aud_accion: 'create', // Indica la acción de crear una factura
-          aud_modulo: 'Facturación', // El módulo al que pertenece esta acción
-          aud_funcionalidad: 'facturas', // La funcionalidad específica dentro del módulo
-          aud_observacion: `Creación de factura con ID: ${factura.factura_id}` // Detalle de la acción realizada, asumiendo que la respuesta incluye el ID de la factura creada
+          aud_usuario: this.userloged,
+          aud_accion: 'create',
+          aud_modulo: 'Facturación',
+          aud_funcionalidad: 'facturas',
+          aud_observacion: `Creación de factura con ID: ${factura.factura_id}`
         }).subscribe();
       })
     );
   }
 
-  //obtener una factura por id
   getFactura(id: string): Observable<any> {
     return this.api.get(this.url + 'facturas/' + id);
   }
 
-  //editar una factura
   editFactura(id: string, factura: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.put(this.url + 'facturas/' + id, factura).pipe(
@@ -253,7 +284,6 @@ export class ApiFacturacionService {
     );
   }
 
-  //eliminar una factura
   deleteFactura(id: string): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.delete(this.url + 'facturas/' + id).pipe(
@@ -279,7 +309,6 @@ export class ApiFacturacionService {
     );
   }
 
-  //agregar el detalle de la factura
   createDetalleFactura(detalleFactura: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.post(this.url + 'detalle_factura', detalleFactura).pipe(
@@ -295,12 +324,10 @@ export class ApiFacturacionService {
     );
   }
 
-  //ver detalles por id 
   getDetalleFacturaById(id: string): Observable<any> {
     return this.api.get(this.url + 'detalle_factura/' + id);
   }
 
-  //editar detalle de factura
   editDetalleFactura(id: string, detalleFactura: any): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.put(this.url + 'detalle_factura/' + id, detalleFactura).pipe(
@@ -326,7 +353,6 @@ export class ApiFacturacionService {
     );
   }
 
-  //eliminar detalle de factura
   deleteDetalleFactura(id: string): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.delete(this.url + 'detalle_factura/' + id).pipe(
@@ -352,7 +378,6 @@ export class ApiFacturacionService {
     );
   }
 
-  //eliminar detalles por facturas 
   deleteDetallesFacturaPorFacturaId(facturaId: string): Observable<any> {
     this.userloged = this.userLogged;
     return this.api.delete(this.url + 'detalle_factura/factura/' + facturaId).pipe(
@@ -378,37 +403,31 @@ export class ApiFacturacionService {
     );
   }
 
-  //ver productos de la factura
   verProductosFactura(facturaId: string): Observable<any> {
     return this.api.get(this.url + 'detalle_factura/factura/' + facturaId);
   }
 
-  //Traer nombres del detalle de factura
   getNombresDetalleFactura(facturaid: string): Observable<any> {
     return this.api.get(this.url + 'detalle_factura/factura/' + facturaid + '/nombres_productos');
   }
 
-  //Productos
-  //
-  //Obtener todos los productos
+  // Productos
   getProducts(): Observable<any> {
     return this.http.get(this.baseUrl + '/Producto').pipe(
       retryWhen(errors =>
         errors.pipe(
-          // Utiliza scan para contar los reintentos
           scan((acc, error) => {
-            if (acc >= 3) { // Si se han hecho 3 intentos, lanza un error
+            if (acc >= 3) {
               throw error;
             }
             return acc + 1;
           }, 0),
-          delay(1000) // Espera 1 segundo antes de cada reintento
+          delay(1000)
         )
       )
     );
   }
 
-     // Obtener un producto por ID
   getProductById(productId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/Producto/${productId}`).pipe(
       retryWhen(errors =>
@@ -425,7 +444,6 @@ export class ApiFacturacionService {
     );
   }
 
-  // Actualizar un producto
   updateProduct(productId: number, productData: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/Producto/${productId}`, productData).pipe(
       retryWhen(errors =>
@@ -442,9 +460,7 @@ export class ApiFacturacionService {
     );
   }
 
-  //Login
-  //
-  //Iniciar sesión
+  // Login
   login(username: string, password: string, moduleName: string): Observable<any> {
     return this.http.post<any>(this.loginApi, {
       usr_user: username,
@@ -470,6 +486,15 @@ export class ApiFacturacionService {
 
         this.getUserLoggedId(); // Obtiene el ID del usuario logueado
 
+        // Registrar auditoría para el inicio de sesión
+        this.sendAudit({
+          aud_usuario: response.usr_id, // Usuario que inició sesión
+          aud_accion: 'login',
+          aud_modulo: 'Seguridad',
+          aud_funcionalidad: 'login',
+          aud_observacion: `Inicio de sesión del usuario: ${username}`
+        }).subscribe();
+
       }),
       catchError(error => {
         // Maneja errores de autenticación y otros errores
@@ -480,7 +505,6 @@ export class ApiFacturacionService {
       })
     );
   }
-
 
   getFunctionalities(): string[] {
     if (this.functionalities.length === 0) {
@@ -493,12 +517,21 @@ export class ApiFacturacionService {
   }
 
   logout() {
+    const userId = this.userLogged; // Obtener el ID del usuario antes de limpiar el almacenamiento local
     localStorage.removeItem('access_token');
     localStorage.removeItem('functionalities');
     localStorage.removeItem('role');
     localStorage.removeItem('user');
     this.functionalities = [];
+
+    // Registrar auditoría para el cierre de sesión
+    this.sendAudit({
+      aud_usuario: userId,
+      aud_accion: 'logout',
+      aud_modulo: 'Seguridad',
+      aud_funcionalidad: 'logout',
+      aud_observacion: `Cierre de sesión del usuario: ${userId}`
+    }).subscribe();
   }
 
 }
-

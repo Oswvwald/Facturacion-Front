@@ -21,11 +21,13 @@
         </div>
     </div>
 
-    <div class="customer-details" *ngIf="clienteDetalles">
-        <h2>{{ clienteDetalles.apellidos }} {{ clienteDetalles.nombres }}</h2>
-        <p><strong>Dirección: </strong>{{ clienteDetalles.direccion }}</p>
-        <p><strong>Telefono: </strong>{{ clienteDetalles.telefono }}</p>
-    </div>
+    <div class="customer-details" *ngIf="clienteDetalles && clienteDetalles.length > 0">
+        <h2>{{ clienteDetalles[0]?.apellidos }} {{ clienteDetalles[0]?.nombres }}</h2>
+        <p><strong>Dirección: </strong>{{ clienteDetalles[0]?.direccion }}</p>
+        <p><strong>Teléfono: </strong>{{ clienteDetalles[0]?.telefono }}</p>
+        <p><strong>Correo: </strong>{{ clienteDetalles[0]?.email }}</p>
+      </div>
+      
 
     <div class="payment-details">
         <h3>Método de Pago</h3>
@@ -58,7 +60,7 @@
 
     <!-- Totales de la factura -->
     <div class="totals">
-        <p><strong>Subtotal:</strong> {{ facturaDetalles.subtotal | currency }}</p>
+    
         <p><strong>IVA ({{ facturaDetalles.iva }}%):</strong> {{ facturaDetalles.ivaTotal | currency }}</p>
         <p><strong>Total:</strong> {{ facturaDetalles.total | currency }}</p>
     </div>

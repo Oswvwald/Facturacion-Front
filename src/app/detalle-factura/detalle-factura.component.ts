@@ -32,6 +32,7 @@ export class DetalleFacturaComponent implements OnInit {
   obtenerClienteDetalles(cedula: string) {
     this.api.getClientByCedula(cedula).subscribe((data: any) => {
       this.clienteDetalles = data.cliente;
+      console.log("clientes", this.clienteDetalles[0].nombres)
     }, (error: any) => {
       console.error('Error al obtener detalles del cliente', error);
     });

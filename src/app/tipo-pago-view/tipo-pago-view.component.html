@@ -3,6 +3,12 @@
 <div class="container">
     <h1>Gestión de Tipos de Pago</h1>
     <button mat-raised-button (click)="openDialog()" class="botonCrear">Crear Tipo de Pago</button>
+
+    <!-- Campo de búsqueda -->
+    <div class="input-group mb-3" style="width: 200px; float: right;">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="buscarTexto" (input)="filtrarTiposPago()">
+    </div>
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -14,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let tipoPago of tiposPago">
+                <tr *ngFor="let tipoPago of tiposPagoMostrados">
                     <td>{{tipoPago.tipo_code}}</td>
                     <td>{{tipoPago.tipo}}</td>
                     <td>{{tipoPago.descripcion}}</td>
@@ -25,5 +31,31 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Proceso de paginación -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <!-- Botones para seleccionar cantidad de registros por página -->
+                <button *ngFor="let cantidad of [10, 20, 50, 100]" class="btn btn-outline-primary me-1" (click)="cambiarRegistrosPorPagina(cantidad)">
+                    {{cantidad}}
+                </button>
+            </div>
+            <div>
+                <span>Mostrando {{(paginaActual - 1) * tiposPagoPorPagina + 1}} a {{paginaActual * tiposPagoPorPagina > tiposPagoFiltrados.length ? tiposPagoFiltrados.length : paginaActual * tiposPagoPorPagina}} de {{tiposPagoFiltrados.length}} tipos de pago</span>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mb-0">
+                        <li class="page-item" [class.disabled]="paginaActual === 1">
+                            <a class="page-link" href="#" (click)="cambiarPagina(paginaActual - 1, $event)">Previous</a>
+                        </li>
+                        <li class="page-item" [class.active]="paginaActual === n" *ngFor="let n of getNumeroPaginas()">
+                            <a class="page-link" href="#" (click)="cambiarPagina(n, $event)">{{n}}</a>
+                        </li>
+                        <li class="page-item" [class.disabled]="paginaActual === getNumeroPaginas().length">
+                            <a class="page-link" href="#" (click)="cambiarPagina(paginaActual + 1, $event)">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </div>

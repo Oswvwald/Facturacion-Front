@@ -5,5 +5,6 @@ export interface Cliente {
     direccion: string;
     telefono: string;
     correo: string;
+    estado: boolean;
   }
   

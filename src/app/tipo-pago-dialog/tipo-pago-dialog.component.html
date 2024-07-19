@@ -1,16 +1,45 @@
-<form>
-    <div>
-        <label for="idTipo">Id tipo pago</label>
-        <input id="idTipo" placeholder="1" [(ngModel)]="tipo_code" [ngModelOptions]="{standalone:true}">
-    </div>
-    <div>
+<form (ngSubmit)="saveTipoPago()" #tipoPagoForm="ngForm">
+    <div class="mb-3">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="tipo"
+          placeholder="Efectivo"
+          [(ngModel)]="tipo"
+          name="tipo"
+          #tipoRef="ngModel"
+          required
+          [ngClass]="{'is-invalid': tipoRef.invalid && tipoRef.touched}"
+        />
         <label for="tipo">Tipo de Pago</label>
-        <input id="tipo" placeholder="Efectivo" [(ngModel)]="tipo" [ngModelOptions]="{standalone:true}">
+        <div *ngIf="tipoRef.invalid && tipoRef.touched" class="invalid-feedback">
+          El tipo de pago es requerido.
+        </div>
+      </div>
     </div>
-    <div>
+  
+    <div class="mb-3">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="descripcion"
+          placeholder="Pago en efectivo"
+          [(ngModel)]="descripcion"
+          name="descripcion"
+          #descripcionRef="ngModel"
+          required
+          [ngClass]="{'is-invalid': descripcionRef.invalid && descripcionRef.touched}"
+        />
         <label for="descripcion">Descripción</label>
-        <input id="descripcion" placeholder="Pago en efectivo" [(ngModel)]="descripcion" [ngModelOptions]="{standalone:true}">
+        <div *ngIf="descripcionRef.invalid && descripcionRef.touched" class="invalid-feedback">
+          La descripción es requerida.
+        </div>
+      </div>
     </div>
-    <button (click)="saveTipoPago()">{{ EditarVoF ? 'Editar' : 'Crear' }}</button>
-    <button (click)="closeDialog()">Cancelar</button>
-</form>
+  
+    <button type="submit" class="btn btn-primary" [disabled]="tipoPagoForm.invalid">{{ EditarVoF ? 'Editar' : 'Crear' }}</button>
+    <button type="button" class="btn btn-secondary" (click)="closeDialog()">Cancelar</button>
+  </form>
+  

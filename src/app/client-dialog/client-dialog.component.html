@@ -12,6 +12,7 @@
         required
         pattern="^[0-9]{10}$"
         (ngModelChange)="checkCedula()"
+        [disabled]="editarVoF"
         [ngClass]="{'is-invalid': !cedulaValida && cedulaRef.touched}"
       />
       <label for="cedula">Cédula</label>
@@ -21,6 +22,8 @@
     </div>
   </div>
 
+  <!-- El resto de los campos permanecen igual -->
+  <!-- Nombres -->
   <div class="mb-3">
     <div class="form-floating">
       <input
@@ -41,6 +44,7 @@
     </div>
   </div>
 
+  <!-- Apellidos -->
   <div class="mb-3">
     <div class="form-floating">
       <input
@@ -61,6 +65,7 @@
     </div>
   </div>
 
+  <!-- Fecha de Nacimiento -->
   <div class="mb-3">
     <div class="form-floating">
       <input
@@ -81,6 +86,7 @@
     </div>
   </div>
 
+  <!-- Dirección -->
   <div class="mb-3 full-width">
     <div class="form-floating">
       <input
@@ -101,6 +107,7 @@
     </div>
   </div>
 
+  <!-- Teléfono -->
   <div class="mb-3">
     <div class="form-floating">
       <input
@@ -122,6 +129,7 @@
     </div>
   </div>
 
+  <!-- Email -->
   <div class="mb-3">
     <div class="form-floating">
       <input
@@ -143,6 +151,7 @@
     </div>
   </div>
 
+  <!-- Tipo de Pago -->
   <div class="mb-3">
     <div class="form-floating">
       <select
@@ -164,6 +173,7 @@
     </div>
   </div>
 
+  <!-- Estado Activo -->
   <div class="mb-3">
     <div class="form-check">
       <input

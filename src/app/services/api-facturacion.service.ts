@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class ApiFacturacionService {
 
   url: string = 'http://45.70.13.48:3000/';
-  private baseUrl = '/api'; // Utiliza el proxy configurado
+  private baseUrl = '/api'; // Este es el que usa el proxies.conf.json
   private loginApi = 'https://api-modulo-seguridad.onrender.com/api/login_module';
   private auditApi = 'https://api-modulo-seguridad.onrender.com/api/auditoria';
   private userApi: string = 'https://api-modulo-seguridad.onrender.com/api/myuser';
